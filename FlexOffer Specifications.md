@@ -13,8 +13,8 @@ It offers a common representation of all flexibilities, based on time slices and
 ### Parameters
 Here is the list of parameters to be included in the FlexOffer Message
 
-|Parameter|	Mandatory | Type | Comment|
-|---------|	--------- | ---- | -------|
+|Parameter|Mandatory | Type | Comment|
+|---------|--------- | ---- | -------|
 |id | Yes | Integer| |			
 |state|Yes|String|Possible values: Assigned| 
 |offeredById|Yes|Timestamp||
@@ -22,35 +22,39 @@ Here is the list of parameters to be included in the FlexOffer Message
 |assignmentBeforeDurationSeconds|No|Integer||
 |assignmentBeforeTime|No|Timestamp||
 |creationTime|Yes|Timestamp||
-|durationSeconds	Yes	Integer	
-|endAfterTime	Yes	Timestamp	
-|endBeforeTime	Yes	Timestamp	
-|numSecondsPerInterval	Yes	Integer	
-|startAfterTime	No	Timestamp	If not explicated: current time
-|startBeforeTime	No	Timestamp	If not explicated: current time
-|totalEnergyConstraint	No	List of parameters	
-|slices	Yes	List of parameters	
-|flexOfferSchedule	Yes	List of parameters	
-|defaultSchedule	Yes	List of parameters	
+|durationSeconds|Yes|Integer||
+|endAfterTime|Yes|Timestamp||
+|endBeforeTime|Yes|Timestamp|
+|numSecondsPerInterval|Yes|Integer|
+|startAfterTime|No|Timestamp|If not explicated: current time|
+|startBeforeTime|No|Timestamp|If not explicated: current time|
+|totalEnergyConstraint|No|List of parameters|
+|slices|Yes|List of parameters|
+|flexOfferSchedule|Yes|List of parameters|
+|defaultSchedule|Yes|List of parameters|
 
-slices parameters	Mandatory	Type	Comment
-durationSeconds	Yes	Integer	
-costPerEnergyUnitLimit	No	Integer	
-energyConstraint	Yes	List of parameters	
+|slices|parameters|Mandatory|Type|Comment|
+|---------|---------| ----|-------|---|
+|durationSeconds|Yes|Integer|
+|costPerEnergyUnitLimit|No|Integer||
+|energyConstraint|Yes|List of parameters||	
 
-energyConstraint parameters	Mandatory	Type	Comment
-lower	Yes	Float	
-upper	Yes	Float	
+|energyConstraint|parameters|Mandatory|Type|Comment|
+|---------|---------| ----|-------|---|
+|lower|Yes|Float|	
+|upper|Yes|Float|	
 
-flexOfferSchedule parameters	Mandatory	Type	Comment
-startTime	Yes	Float	
-energyAmounts	Yes	List of Float	
+|flexOfferSchedule|parameters|Mandatory|Type|Comment|
+|---------|---------| ----|-------|---|
+|startTime|Yes|Float|
+|energyAmounts|Yes|List of Float|
 
-defaultSchedule parameters	Mandatory	Type	Comment
-startTime	Yes	Float	
-energyAmounts	Yes	List of Float	
+|defaultSchedule|parameters|Mandatory|Type|Comment|
+|---------|---------| ----|-------|---|
+|startTime|Yes|Float|
+|energyAmounts|Yes|List of Float|
 
-Constraints
+### Constraints
 Several constraints can be included in the Flex Offer message: 
 Constraint	Mandatory	Type	Use	Scope
 Start time constraint	Yes	Range
