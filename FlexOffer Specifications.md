@@ -16,61 +16,99 @@ Here is the list of parameters to be included in the FlexOffer Message
 |Parameter|Mandatory | Type | Comment|
 |---------|--------- | ---- | -------|
 |id | Yes | Integer| |			
-|state|Yes|String|Possible values: Assigned| 
+|state|Yes|String|Possible values: initial/ offered/ accepted/ rejected/assigned/ executed/ invalid/canceled| 
+|stateReason|No|String||
 |offeredById|Yes|Timestamp||
-|acceptanceBeforeTime|No|Timestamp||
-|assignmentBeforeDurationSeconds|No|Integer||
+|acceptBeforeTime|No|Timestamp||
+|acceptBeforeInterval|No|Integer|Seconds before startAfterTime|
+|assignmentBeforeInterval|No|Integer|Seconds before startAfterTime|
 |assignmentBeforeTime|No|Timestamp||
 |creationTime|Yes|Timestamp||
-|durationSeconds|Yes|Integer||
-|endAfterTime|Yes|Timestamp||
-|endBeforeTime|Yes|Timestamp|
-|numSecondsPerInterval|Yes|Integer|
+|endAfterTime|No|Timestamp||
+|endBeforeTime|No|Timestamp|
+|numSecondsPerInterval|No|Integer|Default:900|
 |startAfterTime|No|Timestamp|If not explicated: current time|
 |startBeforeTime|No|Timestamp|If not explicated: current time|
 |totalEnergyConstraint|No|List of parameters|
-|slices|Yes|List of parameters|
-|flexOfferSchedule|Yes|List of parameters|
-|defaultSchedule|Yes|List of parameters|
+|subTotalEnergyConstraint|No|List of parameters|
+|powerFactorConstraint|No|List of parameters|
+|totalCostConstraint|No|List of parameters|
+|FlexOfferProfileType|No|String|activeEnergy(default)/reactiveEnergy/apparentEnergy/voltage|
+|flexOfferProfileConstraints|Yes|Array|Null value or empty list means flexibility removal|
+|flexOfferSchedule|Yes|List of parameters|Only in the response to an offer|
+|defaultSchedule|No|List of parameters|
+|locationId|No|String||
+|functionTest|No|String||
+|currency|No|String||
+|flexOfferType|No|String||
+|assignment|No|String||
+|accountId|No|String||
+|unit|No|String||
+|multiplier|No|String||
 
-|slices|parameters|Mandatory|Type|Comment|
-|---------|---------| ----|-------|---|
-|durationSeconds|Yes|Integer|
-|costPerEnergyUnitLimit|No|Integer||
-|energyConstraint|Yes|List of parameters||	
 
-|energyConstraint|parameters|Mandatory|Type|Comment|
-|---------|---------| ----|-------|---|
+|flexOfferProfileConstraints array element|Mandatory|Type|Comment|
+|---------| ----|-------|---|
+|tariffConstraint|No|List of parameters||
+|energyConstraintList|Yes|Array||	
+|minDuration|No|Integer||	
+|maxDuration|No|Integer||	
+
+|totalEnergy/subTotalEnergy/totalCost/powerFactor/Constraint parameters|Mandatory|Type|Comment|
+|---------| ----|-------|---|
 |lower|Yes|Float|	
 |upper|Yes|Float|	
 
-|flexOfferSchedule|parameters|Mandatory|Type|Comment|
-|---------|---------| ----|-------|---|
-|startTime|Yes|Float|
-|energyAmounts|Yes|List of Float|
+|energyConstraintList Array element|Mandatory|Type|Comment|
+|---------| ----|-------|---|
+|lowerBound|Yes|Float|	
+|upperBound|Yes|Float|	
+|phases|||||
 
-|defaultSchedule|parameters|Mandatory|Type|Comment|
-|---------|---------| ----|-------|---|
+|flexOfferTariffConstraint parameters|Mandatory|Type|Comment|
+|---------| ----|-------|---|
+|tariffSlices|Yes|Array|	
+|StartTime|No|Timestamp|	
+
+|tariffSlices array element|Mandatory|Type|Comment|
+|---------| ----|-------|---|
+|duration|No|Integer||
+|tarriffConstraint|Yes|List of parameters||	
+
+|tariffConstraint parameters|Mandatory|Type|Comment|
+|---------| ----|-------|---|
+|minTariff|Yes|Float||	
+|maxTariff|Yes|Float||	
+
+|flexOfferSchedule parameters|Mandatory|Type|Comment|
+|---------| ----|-------|---|
+|startTime|Yes|Timestamp|
+|scheduleId|No|Integer|
+|scheduleId|No|Integer|
+|scheduleSlices|Yes|Array|
+
+|scheduleSlices array element|Mandatory|Type|Comment|
+|---------| ----|-------|---|
+|duration|No|Integer|
+|energyAmount|Yes|Float|
+|tariff|No|Float|
+
+|defaultSchedule|Mandatory|Type|Comment|
+|---------| ----|-------|---|
 |startTime|Yes|Float|
-|energyAmounts|Yes|List of Float|
+|scheduleSlices|Yes|Array|
 
 ### Constraints
 Several constraints can be included in the Flex Offer message: 
 |Constraint|Mandatory|Type|Use|Scope|
 |-------|-------|----|-------|---|
 |Start time constraint|Yes|Range: startAfterTime, startBeforeTime|Defines the time range within which the offer can be activated|Whole offer|
-|Energy amount constraint|Yes|Range: energyConstraint.lower, energyConstraint.upper OR List of floats|For every discrete interval of an active device operation, energy amount flexibility is characterized by a range|Time slice|
+|Energy amount constraint|Yes|Range: energyConstraintList[i].lowerBound, energyConstraintList[i].upperBound OR List of floats|For every discrete interval of an active device operation, energy amount flexibility is characterized by a range|Time slice|
 |Total energy constraint|No|Range: [totalEnergyConstraint.lower, totalEnergyConstraint.upper]|Bounds the total energy amount requested or offered within the full active operation of a flexible resource|Whole offer|
+|Sub Total energy constraint|No|Range: [subTotalEnergyConstraint.lower, subTotalEnergyConstraint.upper]|Bounds the total available energy amount requested or offered within the full active operation of a flexible resource|Whole offer|
 |Dependent energy amount constraint|No|2D energy flexibility polygon|Minimum and maximum energy amounts at a discrete interval t depending on the total energy consumed at the intervals 1..t-1. This constraint should be used for the most advanced forms of flexible resources (e.g., heat-pumps), where the flexibility changes over time and is dependent on an internal system state (e.g., temperature).|Time slice|
 |Acceptance time constraint|No|Time value: acceptanceBeforeTime|Sets the deadline on when a flex-offer receiving party (e.g., BRP) should acknowledge successful acceptance or rejection of the flex-offer. A flex-offer rejection may occur if, e. g., flex-offer constraints or other metadata (e.g., prices) are invalid or inappropriate (e.g., quantities are too small, prices are too high).|Whole offer|
 |Assignment time constraint|No|Absolute timestamp (assignmentBeforeTime) OR relative duration (assignmentBeforeDurationSeconds)|Sets the deadlines on when flex-offer schedule update (assignment) is allowed to be sent by the flex-offer receiving party (BRP) to a flex-offer issuing party (flexible resource).|Whole offer|
-
-Given any (prosumer) load instance, load flexibility modelling should consider (and use) simple Flex-Offer constraints first before considering more advanced ones, following this algorithm:
--	Step 1, Use Flex-Offer energy flexibility first (energyConstraint.lower - energyConstraint.upper). If sufficient flexibility is captured, stop. Otherwise - go to Step 2.
--	Step 2, If the load/process exhibits time flexibility, use time flexibility (startAfterTime - StartEndTime). Use implicit time flexibility if needed (see above). If sufficient flexibility is captured, stop. Otherwise - go to Step 3.
--	Step 3, If the load/process requires a fixed or flexible amount of energy delivered by the end of operation, use so-called total energy constraints (totalEnergyConstraint.lower - totalEnergyConstraint.upper) constraining the total energy of the operation. If sufficient flexibility is captured, stop. Otherwise - go to Step 4.
--	Step 4 If the load exhibits dependencies of energy amounts across time intervals, use the dependency-Flex-Offer (first choice) or polytopic constraints (second choice). If sufficient, stop; otherwise – goto Step 5.
--	Step 5 if the load exhibit discrete alternatives, use the two-mode conditional operation (first choice) or XOR profiles (second choice).
 
 ### Json representation example  
 
