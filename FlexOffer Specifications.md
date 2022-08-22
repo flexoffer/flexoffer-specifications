@@ -33,7 +33,6 @@ Here is the list of parameters to be included in the FlexOffer Message
 |subTotalEnergyConstraint|No|List of parameters|
 |powerFactorConstraint|No|List of parameters|
 |totalCostConstraint|No|List of parameters|
-|FlexOfferProfileType|No|String|activeEnergy(default)/reactiveEnergy/apparentEnergy/voltage|
 |flexOfferProfileConstraints|Yes|Array|Null value or empty list means flexibility removal|
 |flexOfferSchedule|Yes|List of parameters|Only in the response to an offer|
 |defaultSchedule|No|List of parameters|
