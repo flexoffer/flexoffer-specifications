@@ -15,12 +15,11 @@ Here is the list of parameters to be included in the FlexOffer Message
 
 |Parameter|Mandatory | Type | Comment|
 |---------|--------- | ---- | -------|
-|id | Yes | Integer| |			
-|state|Yes|String|Possible values: Assigned| 
-|offeredById|Yes|Timestamp||
-|acceptanceBeforeTime|No|Timestamp||
-|assignmentBeforeDurationSeconds|No|Integer||
-|assignmentBeforeTime|No|Timestamp||
+|priority | No | Integer|0 = emergency, 1 = cheapest price, ...; default = 0|			
+|state|Yes|String enumerator|enumerator: 0 = not available; 1 = online, system in operation, no flexibility provided; 2 = available for adaptation; 3 = waiting for execution; 4 = in adaptation| 
+|expiryTime|No|Timestamp|After this time, the offer is considered as not valid anymore.|
+|assignmentBeforeDurationSeconds|No|Integer|Minimum time between the assignment message (reception of REPLY Flex Agent to xEMS with parameter demandSchedule not empty) and start of adaptation (parameter demandSchedule.startTime in REPLY Flex Agent to xEMS).|
+|assignmentBeforeTime|No|Timestamp|Last time when the flexibility activation can begin |
 |creationTime|Yes|Timestamp||
 |durationSeconds|Yes|Integer||
 |endAfterTime|Yes|Timestamp||
