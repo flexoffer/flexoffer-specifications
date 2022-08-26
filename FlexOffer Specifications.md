@@ -38,10 +38,8 @@ Here is the list of parameters to be included in the FlexOffer Message
 |defaultSchedule|No|List of parameters|
 |locationId|No|String||
 |functionTest|No|String||
-|currency|No|String||
 |flexOfferType|No|String||
 |assignment|No|String||
-|accountId|No|String||
 |unit|No|String||
 |multiplier|No|String||
 
