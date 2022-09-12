@@ -109,12 +109,68 @@ Several constraints can be included in the Flex Offer message:
 
 ### Json representation example  
 
-<img width="500" alt="Example FO2" src="https://user-images.githubusercontent.com/48982460/177325083-38401b22-20ac-4074-bccb-6d585ba58fdf.png">
+```json
+{
+  "id": 0,
+  "state": "Assigned",
+  "offeredById": "SELF",
+  "acceptanceBeforeTime": "2018-01-12T06:45:00+01:00",
+  "assignmentBeforeDurationSeconds": 0,
+  "assignmentBeforeTime": "2018-01-12T07:00:00+01:00",
+  "creationTime": "2018-01-12T06:15:00+01:00",
+  "durationSeconds": 9000,
+  "endAfterTime": "2018-01-12T09:45:00+01:00",
+  "endBeforeTime": "2018-01-12T11:45:00+01:00",
+  "numSecondsPerInterval": 900,
+  "startAfterTime": "2018-01-12T07:15:00+01:00",
+  "startBeforeTime": "2018-01-12T09:15:00+01:00",
+  "totalEnergyConstraint": {
+    "lower": 18.0,
+    "upper": 20.0
+  },
+  "slices": [{
+    "durationSeconds": 900,
+    "costPerEnergyUnitLimit": 1,
+    "energyConstraint": {
+      "lower": 2.877109715311126,
+      "upper": 4.650334966274789
+    }
+  },
+  {
+    "durationSeconds": 900,
+    "costPerEnergyUnitLimit": 1,
+    "energyConstraint": {
+      "lower": 5.424558499875854,
+      "upper": 8.589466603032985
+    }
+  },
+  {
+    "durationSeconds": 900,
+    "costPerEnergyUnitLimit": 1,
+    "energyConstraint": {
+    "lower": 6.02222779348911,
+    "upper": 9.055657773803548
+    }
+  }],
+  "flexOfferSchedule": {
+    "startTime": "2018-01-12T07:15:00+01:00",
+    "energyAmounts": [3.7637223407929588,
+    7.0070125514544195,
+    7.538942783646329]
+  },
+  "defaultSchedule": {
+    "startTime": "2018-01-12T07:15:00+01:00",
+    "energyAmounts": [3.7637223407929574,
+    7.0070125514544195,
+    7.538942783646329]
+  }
+} 
 
-
-
+```
  
 ## xEMS-FOA exchange protocol
 
+
 This protocol is not part of FlexOffer. However, an optional library of API/adapters will be made available open-source to facilitate the adoption of FO. Reference installations will also be described.
+
 
