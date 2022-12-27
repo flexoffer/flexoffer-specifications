@@ -1,0 +1,7 @@
+Introduction
+FlexOffer (FO) is a representation of energy flexibility, which has the characteristics of i) being device-independent, ii) modeling flexibility with high accuracy, and iii) being scalable with respect to long time horizons and aggregation of many devices. This work has the purpose of defining the specifications for FOs in a general context. The FO concept was first proposed in the MIRABEL project, further developed in the TOTALFLEX project and demonstrated at large scale on the GOFLEX project. A single FO typically includes:
+• Energy profile, having a number of discrete slices, specifies electricity consumption and production options over a device’s active period of operation, typically in 15min time resolution;
+• Time flexibility interval specifies a time period in which device’s operation (profile) can be advanced or retarded.
+• Default profile specifies a preferred / locally optimal consumption profile (a baseload)
+• Price data specifies (discomfort) prices, e.g., associated to deviations from the default profile.
+This document is organized as follows. Chapter 1 describes how the FO protocol works, the actors involved in creation and management of FOs, the processes FOs go through, and the life cycle of an FO. Chapter 2 describes different types of FOs that can be generated and the energy constraints defining them.
