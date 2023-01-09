@@ -1,4 +1,4 @@
-Introduction
+# Introduction
 FlexOffer (FO) is a representation of energy flexibility, which has the characteristics of i) being device-independent, ii) modeling flexibility with high accuracy, and iii) being scalable with respect to long time horizons and aggregation of many devices. This work has the purpose of defining the specifications for FOs in a general context. The FO concept was first proposed in the MIRABEL project, further developed in the TOTALFLEX project and demonstrated at large scale on the GOFLEX project. A single FO typically includes:
 • Energy profile, having a number of discrete slices, specifies electricity consumption and production options over a device’s active period of operation, typically in 15min time resolution;
 • Time flexibility interval specifies a time period in which device’s operation (profile) can be advanced or retarded.
@@ -6,16 +6,15 @@ FlexOffer (FO) is a representation of energy flexibility, which has the characte
 • Price data specifies (discomfort) prices, e.g., associated to deviations from the default profile.
 This document is organized as follows. Chapter 1 describes how the FO protocol works, the actors involved in creation and management of FOs, the processes FOs go through, and the life cycle of an FO. Chapter 2 describes different types of FOs that can be generated and the energy constraints defining them.
 
-Chapter 1
-FlexOffer protocol
-1.1 Flexibility and main actors
+# Chapter 1: FlexOffer protocol
+## 1.1 Flexibility and main actors
 This work describes FOs, which are a representation for energy flexibility. We describe energy flexibility as the capability to change the time and amount of energy consumption from a grid actor. Flexibility represented by FOs can go through multiple processes: it can be optimized, aggregated and traded. We now describe all the actors that can be involved in these processes.
 • Prosumer: owns the flexible resources that deliver flexibility. FOs are generated at prosumer level by an automatic agent, and the same agent will execute FO schedules once they are received back by the prosumer.
 • Aggregator: collects FOs from prosumers. An aggregator is capable of aggregating, optimizing and disaggregating FOs, and can also sell FOs to the flexibility market.
 • DSO: short for Distribution System Operator, it is the grid operator with the responsbility for medium to low voltage power distribution in a geographical area. It is a buyer on the flexibility market.
 • BRP: short for Balance Responsible Party, it has the responsibility to secure balance between energy generation and consumption in a geographical area. It is a buyer on the flexibility market.
 
-1.2 Flexibility operations
+## 1.2 Flexibility operations
 As mentioned in Section 1.1, flexibility represented by FOs can undergo several processes. This section will describe them in further detail.
 
 1.2.1 Optimization
@@ -33,11 +32,11 @@ It is also possible to trade flexibility in the respective market.
 
 Figure 1.1: A schematic description of the FO life-cycle.
 
-1.3 FlexOffer life cycle
+## 1.3 FlexOffer life cycle
 Figure 1.1 shows the life-cycle of an FO. Two main parties are involved: the prosumer, who generates and executes the FO, and the aggregator, who processes and issues schedules for the FO. The tasks on the prosumer’s side are performed automatically by an agent, which operates according to the prosumer’s requirements.
 First, the prosumer agent forecasts flexibility for the devices, and generates FOs according to that. Each FO is then sent to the aggregator, which will determine if the FO is useful for its needs, decides whether to accept the FO or to reject it (e.g., due to some validation errors, or due to unacceptable price or energy) and informs the prosumer of the response. If the FO is not accepted, it is not executed and the cycle ends here. Otherwise, the aggregator processes it (e.g. aggregating it with other FOs, performing optimization), and establishes a schedule for each FO. FO schedules are then sent back to the prosumer agent, which will execute them by controlling the devices.
 
-1.4 FlexOffer message
+## 1.4 FlexOffer message
 This section has the purpose to show how a JSON message for an FO is made, and which attributes are considered for it.
 This message is the core of the FO protocol. It is exchanged between the flexibility trader and the flexibility providers / users. A range of optional attributes can be used to give indications on constraints and to be used in the different steps of the flexibility trading process. Depending on the attributes used, it can therefore be used to
 • Offer a flexibility bid
@@ -144,9 +143,8 @@ FlexOfferSchedule No ScheduleSlice Interval before which FO execution must end.
 
 Table 1.1: FO attributes and their descriptions.
 
-Chapter 2
-FlexOffer constraints
-2.1 Running example
+# Chapter 2: FlexOffer constraints
+## 2.1 Running example
 In order to show how different types of FOs work, we will define a running
 example that will be used through the document. It is important to note that,
 through this document, we will use the following conventions:
@@ -166,7 +164,7 @@ Figure 2.1: Example of SFO
 
 We will consider two cases. In the first one (charging example), SoC(0) = 0 kWh and the battery can only be charged. In the second one (switching example), SoC(0) = 7 kWh and the battery can switch between charge and discharge at any time unit.
 
-2.2 Standard FlexOffers
+## 2.2 Standard FlexOffers
 There are many types of constraints that have been used to define FOs. The most simple ones are start time constraints and slice (energy) constraints. A start time constraint determines the earliest and latest time unit at which the load can start. An energy constraint establishes, for each time unit at which the load is operating, the minimum and maximum amount of energy that can be consumed from that load. This means that for every time unit t, the energy constraint specifies a lower and an upper bound emin t and emax t such that emin t ≤ e t ≤ emax t . A standard FO (SFO) is an FO whose constraints are all slice constraints.
 Figure 2.1 shows an example of an SFO for the charging example. There are many possible ways of generating an SFO: in this case, we want to use all the flexibility available. At each time unit, a minimum of 0 kWh and a maximum of 5 kWh of energy can be used to charge the battery; this allows to employ as much flexibility as possible. However, from this representation, we may generate unfeasible configurations: for example, if 5 kWh are used at each time unit, 30 kWh will be given in total to the battery, but this is impossible since the maximum charge amount is 14 kWh.
 
@@ -249,7 +247,7 @@ energyAmount": 2, "tariff": 0.5},
 11 },
 
 
-2.3 Total energy constraints FlexOffers
+## 2.3 Total energy constraints FlexOffers
 Another type of constraint is the total energy constraint (TEC), which specifies the lower (TE min ) and upper (TE max ) bounds for the energy that can be consumed over the considered time horizon. With the notation used before, this means
  <- insert equation
 
@@ -324,7 +322,7 @@ Table 2.3: Additional sub-attribute for TEC-SFOs.
 Figure 2.3: Example of DFO for the charging example.
 
 
-2.4 Dependency FlexOffers
+## 2.4 Dependency FlexOffers
 A further type of constraint is the dependent energy constraint. This constraint specifies at each time unit t a lower and an upper bound on the amount of energy that can be consumed, depending on the total amount of energy that has been consumed before time unit t. In more formal terms, this means that there are three real numbers a, b, c such that 
 
 insert formula
@@ -394,7 +392,7 @@ UncertainFunctions Yes ? Define the UFO constraints.
 UncertainThreshold Yes Float Defines the probability threshold.
 Table 2.5: Additional sub-attributes for UFOs.
 
-2.5 Uncertain FlexOffers
+## 2.5 Uncertain FlexOffers
 Uncertain FOs are a type of FOs that take uncertainty from flexibility approximation into account. There are two main types of uncertainty that are considered: time and amount uncertainty. For example, suppose that a prosumer wants to recharge an electric vehicle (EV) overnight. At each time unit, time uncertainty refers to the probability for the EV to be plugged in for recharge at that time, and amount uncertainty refers to the amount of energy that can be given to/taken from the EV at that time. 
 An UFOs is created in two steps. First, uncertainty related to the device status is modeled at each time t; second, we calculate the probability for each energy value at each time to be feasible, taking into account all three types of uncertainty. We will then obtain some functions {f 1 ,...,f T } describing those probabilities: those functions will define the UFO.
 UFOs can be visualized by choosing a probability threshold P 0 . At each time t, the energy values having probability at least P 0 of being feasible can be described by intervals. Figure 2.6 shows what happens in the switching case: with P 0 = 1, the feasible energy values are described by the pink bar; however, if we choose P 0 = 0.8, the available flexibility is represented by the combined pink and blue bars. The figure shows that the choice of a value for P 0 generates a SFO: optimization and aggregation of UFOs are performed by choosing a value for P 0 , and then optimizing and/or aggregating the resulting SFOs.
