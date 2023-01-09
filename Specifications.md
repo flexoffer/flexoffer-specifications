@@ -1,18 +1,18 @@
 # Introduction
 FlexOffer (FO) is a representation of energy flexibility, which has the characteristics of i) being device-independent, ii) modeling flexibility with high accuracy, and iii) being scalable with respect to long time horizons and aggregation of many devices. This work has the purpose of defining the specifications for FOs in a general context. The FO concept was first proposed in the MIRABEL project, further developed in the TOTALFLEX project and demonstrated at large scale on the GOFLEX project. A single FO typically includes:
-• Energy profile, having a number of discrete slices, specifies electricity consumption and production options over a device’s active period of operation, typically in 15min time resolution;
-• Time flexibility interval specifies a time period in which device’s operation (profile) can be advanced or retarded.
-• Default profile specifies a preferred / locally optimal consumption profile (a baseload)
-• Price data specifies (discomfort) prices, e.g., associated to deviations from the default profile.
+* Energy profile, having a number of discrete slices, specifies electricity consumption and production options over a device’s active period of operation, typically in 15min time resolution;
+* Time flexibility interval specifies a time period in which device’s operation (profile) can be advanced or retarded.
+* Default profile specifies a preferred / locally optimal consumption profile (a baseload)
+* Price data specifies (discomfort) prices, e.g., associated to deviations from the default profile.
 This document is organized as follows. Chapter 1 describes how the FO protocol works, the actors involved in creation and management of FOs, the processes FOs go through, and the life cycle of an FO. Chapter 2 describes different types of FOs that can be generated and the energy constraints defining them.
 
 # Chapter 1: FlexOffer protocol
 ## 1.1 Flexibility and main actors
 This work describes FOs, which are a representation for energy flexibility. We describe energy flexibility as the capability to change the time and amount of energy consumption from a grid actor. Flexibility represented by FOs can go through multiple processes: it can be optimized, aggregated and traded. We now describe all the actors that can be involved in these processes.
-• Prosumer: owns the flexible resources that deliver flexibility. FOs are generated at prosumer level by an automatic agent, and the same agent will execute FO schedules once they are received back by the prosumer.
-• Aggregator: collects FOs from prosumers. An aggregator is capable of aggregating, optimizing and disaggregating FOs, and can also sell FOs to the flexibility market.
-• DSO: short for Distribution System Operator, it is the grid operator with the responsbility for medium to low voltage power distribution in a geographical area. It is a buyer on the flexibility market.
-• BRP: short for Balance Responsible Party, it has the responsibility to secure balance between energy generation and consumption in a geographical area. It is a buyer on the flexibility market.
+* Prosumer: owns the flexible resources that deliver flexibility. FOs are generated at prosumer level by an automatic agent, and the same agent will execute FO schedules once they are received back by the prosumer.
+* Aggregator: collects FOs from prosumers. An aggregator is capable of aggregating, optimizing and disaggregating FOs, and can also sell FOs to the flexibility market.
+* DSO: short for Distribution System Operator, it is the grid operator with the responsbility for medium to low voltage power distribution in a geographical area. It is a buyer on the flexibility market.
+* BRP: short for Balance Responsible Party, it has the responsibility to secure balance between energy generation and consumption in a geographical area. It is a buyer on the flexibility market.
 
 ## 1.2 Flexibility operations
 As mentioned in Section 1.1, flexibility represented by FOs can undergo several processes. This section will describe them in further detail.
@@ -29,6 +29,7 @@ The importance of the aggregation process has been described in the previous sub
 ### 1.2.4 Flexibility trading
 It is also possible to trade flexibility in the respective market.
 
+![A schematic description of the FO life-cycle.](https://user-images.githubusercontent.com/48982460/211333067-c1505cd5-d0ec-4104-945b-4f8954e38efa.png)
 
 Figure 1.1: A schematic description of the FO life-cycle.
 
@@ -39,107 +40,96 @@ First, the prosumer agent forecasts flexibility for the devices, and generates F
 ## 1.4 FlexOffer message
 This section has the purpose to show how a JSON message for an FO is made, and which attributes are considered for it.
 This message is the core of the FO protocol. It is exchanged between the flexibility trader and the flexibility providers / users. A range of optional attributes can be used to give indications on constraints and to be used in the different steps of the flexibility trading process. Depending on the attributes used, it can therefore be used to
-• Offer a flexibility bid
-• Accept or refuse a flexibility offer
-• Assign a flexibility It offers a common representation of all flexibilities, based on time slices and optional constraints.
+* Offer a flexibility bid
+* Accept or refuse a flexibility offer
+* Assign a flexibility It offers a common representation of all flexibilities, based on time slices and optional constraints.
 
 This is an example of a FO message:
+```json
 
-1 "flexOffer": {
-2 "id": "4188a132-a937-4639-96cf-d8529fa78b86",
-3 "state": "Adaptation",
-4 "stateReason": "FlexOffer Initialized",
-5 "creationInterval": 1726911,
-6 "offeredById": "harry@80060B5E0FD671D58243CE7162A6
-054719822955",
-7 "locationId": {
-8 "userLocation": {"longitude": 9.990595, "
-latitude": 57.012293}
-9 },
-10 "acceptanceBeforeInterval": 1726914,
-11 "assignmentBeforeInterval": 1726914,
-12 "startAfterInterval": 1726912,
-13 "startBeforeInterval": 1726920,
-14 "assignment": "obligatory",
-15 "flexOfferProfileConstraints": [
-16 {
-17 "energyConstraintList": [{"lower": [0,0,0,
-0,0,0], "upper": [5,5,4.76,0,0,0]}],
-18 "tariffConstraint": {"minTariff": [0.03,0.
-03,0.03,0,0,0], "maxTariff": [0.15,0.15
-,0.15,0,0,0]},
-19 "minDuration": 6,
-20 "maxDuration": 6
-21 }
-22 ],
-23 "flexOfferTariffConstraint": {
-24 "tariffSlices": [
-25 {
-26 "duration": 6,
-27 "tariffConstraint": {"minTariff": [0.0
-3,0.03,0.03,0,0,0], "maxTariff": [0
-.15,0.15,0.15,0,0,0]}
-28 }
-29 ],
-30 "startTime": "2019-04-02T00:00:00.000+0000"
-31 },
-32 "defaultSchedule": {
-33 "scheduleId": 0,
-34 "updateId": 0,
-35 "scheduleSlices": [{"duration": 6, "
-energyAmount": [2,3,3,0,0,0], "tariff": 6}]
-,
-36 "startTime": "2019-04-02T00:00:00.000+0000"
-6 CHAPTER 1. FLEXOFFER PROTOCOL
-37 },
-38 "flexOfferSchedule": {
-39 "scheduleId": 12345,
-40 "updateId": 1,
-41 "scheduleSlices": [{"duration": 6, "
-energyAmount": [2,3,3,0,0,0], "tariff": 6}]
-,
-42 "startTime": "2019-04-02T16:00:00.000+0000"
-43 },
-44 "acceptanceBeforeTime": "2019-04-02T16:30:00.000+0
-000",
-45 "assignmentBeforeTime": "2019-04-02T16:30:00.000+0
-000",
-46 "numSecondsPerInterval": 900,
-47 "startAfterTime": "2019-04-02T16:00:00.000+0000",
-48 "startBeforeTime": "2019-04-02T18:00:00.000+0000",
-49 "creationTime": "2019-04-02T15:45:00.000+0000",
-50 "correct": true
-51 }
+"flexOffer": {
+ "id": "4188a132-a937-4639-96cf-d8529fa78b86",
+ "state": "Adaptation",
+ "stateReason": "FlexOffer Initialized",
+ "creationInterval": 1726911,
+ "offeredById": "harry@80060B5E0FD671D58243CE7162A6054719822955",
+ "locationId": {
+  "userLocation": {"longitude": 9.990595, "latitude": 57.012293}
+ },
+ "acceptanceBeforeInterval": 1726914,
+ "assignmentBeforeInterval": 1726914,
+ "startAfterInterval": 1726912,
+ "startBeforeInterval": 1726920,
+ "assignment": "obligatory",
+ "flexOfferProfileConstraints": [
+ {
+  "energyConstraintList": [{"lower": [0,0,0,0,0,0], "upper": [5,5,4.76,0,0,0]}],
+  "tariffConstraint": {"minTariff": [0.03,0.03,0.03,0,0,0], "maxTariff": [0.15,0.15,0.15,0,0,0]},
+  "minDuration": 6,
+  "maxDuration": 6
+ }
+ ],
+ "flexOfferTariffConstraint": {
+  "tariffSlices": [
+   {
+   "duration": 6,
+   "tariffConstraint": {"minTariff": [0.03,0.03,0.03,0,0,0], "maxTariff": [0.15,0.15,0.15,0,0,0]}
+   }
+  ],
+  "startTime": "2019-04-02T00:00:00.000+0000"
+ },
+ "defaultSchedule": {
+  "scheduleId": 0,
+  "updateId": 0,
+  "scheduleSlices": [{"duration": 6, "energyAmount": [2,3,3,0,0,0], "tariff": 6}] ,
+  "startTime": "2019-04-02T00:00:00.000+0000"
+ },
+ "flexOfferSchedule": {
+  "scheduleId": 12345,
+  "updateId": 1,
+  "scheduleSlices": [{"duration": 6, " energyAmount": [2,3,3,0,0,0], "tariff": 6}] ,
+  "startTime": "2019-04-02T16:00:00.000+0000"
+ },
+ "acceptanceBeforeTime": "2019-04-02T16:30:00.000+0 000",
+ "assignmentBeforeTime": "2019-04-02T16:30:00.000+0 000",
+ "numSecondsPerInterval": 900,
+ "startAfterTime": "2019-04-02T16:00:00.000+0000",
+ "startBeforeTime": "2019-04-02T18:00:00.000+0000",
+ "creationTime": "2019-04-02T15:45:00.000+0000",
+ "correct": true
+}
+```
 
 
 In the following table, the attributes included in an FO message are listed.
 
 
-Attribute Mandatory Type Description
-ID Yes Int The ID that identifies the FO
-State Yes String State of the FO (initial/offered/accepted/rejected/assigned/executed/invalid/canceled)
-StateReason No String Reason for FO rejection (if state == rejected)
-NumSecondsPerInterval Yes Int Duration in seconds of a time interval (default value is 900)
-CreationTime Yes Datetime Absolute time at which the FO has been created
-CreationInterval No Integer FO creation Interval calculated as epoch value for creationTime/numSecondsPerInterval
-OfferedById Yes String ID of the FO owner 
-LocationID No String ID for representing the location of the FO in the grid system
-AcceptBeforeTime No Datetime Absolute time before which FO must be accepted.
-AcceptBeforeInterval No Integer Interval before which FO must be accepted.
-AssignmentBeforeTime No Datetime Absolute time before which FO must be scheduled.
-AssignmentBeforeInterval No Integer Interval before which FO must be scheduled.
-StartAfterTime Yes Datetime Absolute time after which FO must be started.
-StartAfterInterval No Integer Interval after which FO must be started.
-StartBeforeTime Yes Datetime Absolute time before which FO must be started.
-StartBeforeInterval No Integer Interval before which FO must be started.
-EndAfterTime No Datetime Absolute time after which FO execution must end.
-EndAfterInterval No Integer Interval after which FO execution must end.
-EndBeforeTime No Datetime Absolute time before which FO execution must end.
-EndBeforeInterval No Integer Interval before which FO execution must end.
-FlexOfferProfileConstraints Yes FlexOfferSlice Constraints for FO profile.
-FlexOfferTariffConstraints No TariffSlice Constraints for FO tariff.
-DefaultSchedule No ScheduleSlice Default energy consumption and time schedule of an FO.
-FlexOfferSchedule No ScheduleSlice Interval before which FO execution must end.
+|Attribute |Mandatory |Type |Description|
+|-------|-------|----|-------|
+|ID |Yes |Int |The ID that identifies the FO|
+|State| Yes |String |State of the FO (initial/offered/accepted/rejected/assigned/executed/invalid/canceled)|
+|StateReason| No|String Reason for FO rejection (if state == rejected)|
+|NumSecondsPerInterval |Yes| Int| Duration in seconds of a time interval (default value is 900)|
+|CreationTime |Yes |Datetime |Absolute time at which the FO has been created|
+|CreationInterval| No| Integer |FO creation Interval calculated as epoch value for creationTime/numSecondsPerInterval|
+|OfferedById|Yes |String| ID of the FO owner |
+|LocationID| No| String| ID for representing the location of the FO in the grid system|
+|AcceptBeforeTime| No |Datetime| Absolute time before which FO must be accepted.|
+|AcceptBeforeInterval| No| Integer |Interval before which FO must be accepted.|
+|AssignmentBeforeTime| No |Datetime |Absolute time before which FO must be scheduled.|
+|AssignmentBeforeInterval |No |Integer| Interval before which FO must be scheduled.|
+|StartAfterTime| Yes| Datetime |Absolute time after which FO must be started.|
+|StartAfterInterval| No |Integer |Interval after which FO must be started.|
+|StartBeforeTime| Yes| Datetime |Absolute time before which FO must be started.|
+|StartBeforeInterval |No |Integer| Interval before which FO must be started.|
+|EndAfterTime| No| Datetime |Absolute time after which FO execution must end.|
+|EndAfterInterval |No |Integer| Interval after which FO execution must end.|
+|EndBeforeTime| No| Datetime| Absolute time before which FO execution must end.|
+|EndBeforeInterval|No |Integer| Interval before which FO execution must end.|
+|FlexOfferProfileConstraints |Yes |FlexOfferSlice| Constraints for FO profile.|
+|FlexOfferTariffConstraints| No| TariffSlice |Constraints for FO tariff.|
+|DefaultSchedule| No |ScheduleSlice |Default energy consumption and time schedule of an FO.|
+|FlexOfferSchedule |No |ScheduleSlice |Interval before which FO execution must end.|
 
 Table 1.1: FO attributes and their descriptions.
 
@@ -148,17 +138,18 @@ Table 1.1: FO attributes and their descriptions.
 In order to show how different types of FOs work, we will define a running
 example that will be used through the document. It is important to note that,
 through this document, we will use the following conventions:
-• FOs will represent energy.
-• Positive amounts of energy refer to energy consumed by the prosumer, negative amounts refer to energy obtained by the prosumer.
+* FOs will represent energy.
+* Positive amounts of energy refer to energy consumed by the prosumer, negative amounts refer to energy obtained by the prosumer.
 For our running example, we will consider a Tesla Powerwall battery. Its capacity is 14 kWh, its maximum charging and discharging power are both 5 kW, and its round-trip efficiency is 90%. We use one hour time units, i.e. the battery can either be charged or discharged by an amount up to 5 kWh at each
 time unit.
 For describing the functioning of the battery, we use Coulomb counting [1].
 At each time unit t, we write the state of charge (SoC) of the battery as
 
-(2.1) <- insert formula
+![equation 2.1](https://user-images.githubusercontent.com/48982460/211337921-74283131-9744-4a46-8f61-d7b903f3e79e.png)
 
-Here, SoC(t) is the amount of energy in the battery at time t, expressed in kWh. u(t) is the amount of energy that the prosumer gives to/receives from the battery at time t, in kWh: u(t) is positive if the battery is being charged, negative otherwise. u + (t) is max{u(t),0}, u − (t) is min{u(t),0}. K is a real number that measures how much energy is kept while charging/discharging the battery: it goes from 0 (all the energy is lost) to 1 (no energy is lost). SoC min and SoC max are the minimum and maximum state of charge that the battery can have in kWh, respectively. Lastly, E min and E max are the minimum and
-maximum amount of energy (in kWh) that can be taken from/given to the battery in one time unit.
+Here, SoC(t) is the amount of energy in the battery at time t, expressed in kWh. u(t) is the amount of energy that the prosumer gives to/receives from the battery at time t, in kWh: u(t) is positive if the battery is being charged, negative otherwise. u + (t) is max{u(t),0}, u − (t) is min{u(t),0}. K is a real number that measures how much energy is kept while charging/discharging the battery: it goes from 0 (all the energy is lost) to 1 (no energy is lost). SoC min and SoC max are the minimum and maximum state of charge that the battery can have in kWh, respectively. Lastly, E min and E max are the minimum and maximum amount of energy (in kWh) that can be taken from/given to the battery in one time unit.
+
+![Example of SFO](https://user-images.githubusercontent.com/48982460/211338044-a9704b5d-73f3-4018-9fef-d007d5e2e5c9.png)
 
 Figure 2.1: Example of SFO
 
@@ -171,86 +162,83 @@ Figure 2.1 shows an example of an SFO for the charging example. There are many p
 ### 2.2.1 FlexOffer message
 Section 1.4 describes in detail how the FO message looks like. However, the attribute FlexOfferProfileConstraints has several sub-attributes, which depend on the type of FO that has been issued. In this section, we will describe them for an SFO. This is how the FlexOfferProfileConstraints attribute looks like for an SFO:
 
-1 "flexOfferProfileConstraints": [{ {
-2 "energyConstraintList": [{"lower": 0, "
-upper": 5}],
-3 "tariffConstraint": {"minTariff": 0.03, "
-maxTariff": 0.15},
-4 "minDuration": 1,
-5 "maxDuration": 1
-6 },{
-7 "energyConstraintList": [{"lower": 0, "
-upper": 5}],
-8 "tariffConstraint": {"minTariff": 0.03, "
-maxTariff": 0.15},
-9 "minDuration": 1,
-10 "maxDuration": 1
-11 },{
-12 "energyConstraintList": [{"lower": 0, "
-upper": 5}],
-13 "tariffConstraint": {"minTariff": 0.03, "
-maxTariff": 0.15},
-14 "minDuration": 1,
-15 "maxDuration": 1
-16 },{
-17 "energyConstraintList": [{"lower": 0, "
-upper": 5}],
-18 "tariffConstraint": {"minTariff": 0.03, "
-maxTariff": 0.15},
-19 "minDuration": 1,
-20 "maxDuration": 1
-21 },{
-22 "energyConstraintList": [{"lower": 0, "
-upper": 5}],
-23 "tariffConstraint": {"minTariff": 0.03, "
-maxTariff": 0.15},
-24 "minDuration": 1,
-25 "maxDuration": 1
-26 },{
-27 "energyConstraintList": [{"lower": 0, "
-upper": 5}],
-28 "tariffConstraint": {"minTariff": 0.03, "
-maxTariff": 0.15},
-29 "minDuration": 1,
-30 "maxDuration": 1
-31 }],
+```json
+"flexOfferProfileConstraints": [ {
+ "energyConstraintList": [{"lower": 0, "upper": 5}],
+ "tariffConstraint": {"minTariff": 0.03, "maxTariff": 0.15},
+ "minDuration": 1,
+ "maxDuration": 1
+},{
+ "energyConstraintList": [{"lower": 0, "upper": 5}],
+ "tariffConstraint": {"minTariff": 0.03, "maxTariff": 0.15},
+ "minDuration": 1,
+ "maxDuration": 1
+},{
+ "energyConstraintList": [{"lower": 0, "upper": 5}],
+ "tariffConstraint": {"minTariff": 0.03, "maxTariff": 0.15},
+ "minDuration": 1,
+ "maxDuration": 1
+},{
+ "energyConstraintList": [{"lower": 0, "upper": 5}],
+ "tariffConstraint": {"minTariff": 0.03, "maxTariff": 0.15},
+ "minDuration": 1,
+ "maxDuration": 1
+},{
+ "energyConstraintList": [{"lower": 0, "upper": 5}],
+ "tariffConstraint": {"minTariff": 0.03, "maxTariff": 0.15},
+ "minDuration": 1,
+ "maxDuration": 1
+},{
+ "energyConstraintList": [{"lower": 0, "upper": 5}],
+ "tariffConstraint": {"minTariff": 0.03, "maxTariff": 0.15},
+ "minDuration": 1,
+ "maxDuration": 1
+}]
+```
 
 
 Table 2.2 describes the sub-attributes more in detail.
-Attribute Mandatory Type Description
-EnergyConstraintsList Yes Object Contains the list(s) of energy constraints for one time unit. Has two sub-elements: lower, and upper.
-TariffConstraint No Object List of tariff constraints.Has two elements: MinTariff, and MaxTariff.
-MinDuration No Integer Minimum duration of the FO.
-MaxDuration No Integer Maximum duration of the FO.
+|Attribute |Mandatory| Type |Description|
+|-------|-------|----|-------|
+|EnergyConstraintsList |Yes |Object |Contains the list(s) of energy constraints for one time unit. Has two sub-elements: lower, and upper.|
+|TariffConstraint| No |Object |List of tariff constraints. Has two elements: MinTariff, and MaxTariff.|
+|MinDuration |No |Integer Minimum duration of the FO.|
+|MaxDuration |No |Integer Maximum duration of the FO.|
+
 Table 2.1: Sub-attributes for SFOs.
 
 
 Data in ScheduleSlice format has the following sub-elements:
-Attribute Mandatory Type Description
-Duration No Integer Indicates the duration of the considered slices, in time units.
-EnergyAmount Yes Float Indicates the energy consumption for that slice.
-Tariff No Float Indicates the tariff amount for that slice.
+
+|Attribute| Mandatory| Type |Description|
+|-------|-------|----|-------|
+|Duration |No| Integer |Indicates the duration of the considered slices, in time units.|||
+|EnergyAmount| Yes |Float |Indicates the energy consumption for that slice.||
+|Tariff| No| Float| Indicates the tariff amount for that slice.|
 Table 2.2: ScheduleSlice data.
 
 An example for this data:
-1 "defaultSchedule": {
-2 "scheduleId": 0,
-3 "updateId": 0,
-4 "scheduleSlices": [{"duration": 1, "
-energyAmount": 2, "tariff": 0.5},
-5 {"duration": 1, "energyAmount": 3, "tariff": 0.5}
-6 {"duration": 1, "energyAmount": 3, "tariff": 0.5}
-7 {"duration": 1, "energyAmount": 0, "tariff": 0}
-8 {"duration": 1, "energyAmount": 0, "tariff": 0}
-9 {"duration": 1, "energyAmount": 0, "tariff": 0}],
-10 "startTime": "2019-04-02T00:00:00.000+0000"
-11 },
+```json
+
+"defaultSchedule": {
+ "scheduleId": 0,
+ "updateId": 0,
+ "scheduleSlices": [{"duration": 1, "energyAmount": 2, "tariff": 0.5},
+  {"duration": 1, "energyAmount": 3, "tariff": 0.5}
+  {"duration": 1, "energyAmount": 3, "tariff": 0.5}
+  {"duration": 1, "energyAmount": 0, "tariff": 0}
+  {"duration": 1, "energyAmount": 0, "tariff": 0}
+  {"duration": 1, "energyAmount": 0, "tariff": 0}],
+ "startTime": "2019-04-02T00:00:00.000+0000"
+}
+```
 
 
 ## 2.3 Total energy constraints FlexOffers
 Another type of constraint is the total energy constraint (TEC), which specifies the lower (TE min ) and upper (TE max ) bounds for the energy that can be consumed over the considered time horizon. With the notation used before, this means
- <- insert equation
+![equation](https://user-images.githubusercontent.com/48982460/211338547-781d628e-af6a-4eda-abd4-d8c579c7c2bf.png)
 
+![ Example of TEC FO](https://user-images.githubusercontent.com/48982460/211338616-f3668509-6e68-48fc-9809-4ea50cb17c5f.png)
 Figure 2.2: Example of TEC FO
 
 A total energy constraint standard FO (TEC-SFO) is an FO with slice and total energy constraints. In the charging example, we can define a TEC-SFO by defining an SFO with all the slices between 0 kWh and 5 kWh, and adding a TEC defined by TE max = 14 kWh, since the maximum possible charge of the battery is 14 kWh. The prosumer would also usually define a minimum amount of charge to be obtained during the process, which may be for example 10 kWh : this would be represented by a TEC defined by TE min = 10 kWh. These two TECs are shown in Figure 2.2.
@@ -260,64 +248,53 @@ A total energy constraint standard FO (TEC-SFO) is an FO with slice and total en
 Like in the previous subsection, we describe the sub-attributes for FlexOfferProfileConstraints in the case of a TEC-SFO. The only change in comparison to SFOs is that inside FlexOfferProfileConstraint, we have the sub-attribute TotalEnergyConstraints it is an object with two sub-attributes, lower and upper. They indicate the lowest and highest amount of total consumption for energy respectively.
 
 The part in the JSON message relative to it would be as described below:
-1 "flexOfferProfileConstraints": [{ {
-2 "energyConstraintList": [{"lower": 0, "
-upper": 5}],
-3 "tariffConstraint": {"minTariff": 0.03, "
-maxTariff": 0.15},
-4 "minDuration": 1,
-5 "maxDuration": 1
-6 },{
-7 "energyConstraintList": [{"lower": 0, "
-upper": 5}],
-8 "tariffConstraint": {"minTariff": 0.03, "
-maxTariff": 0.15},
-9 "minDuration": 1,
 
-Attribute Mandatory Type Description
-TotalEnergyConstraints Yes Float Contains the total energy constraints.
-Has two sub-elements: lower, and upper.
-Table 2.3: Additional sub-attribute for TEC-SFOs.
-10 "maxDuration": 1
-11 },{
-12 "energyConstraintList": [{"lower": 0, "
-upper": 5}],
-13 "tariffConstraint": {"minTariff": 0.03, "
-maxTariff": 0.15},
-14 "minDuration": 1,
-15 "maxDuration": 1
-16 },{
-17 "energyConstraintList": [{"lower": 0, "
-upper": 5}],
-18 "tariffConstraint": {"minTariff": 0.03, "
-maxTariff": 0.15},
-19 "minDuration": 1,
-20 "maxDuration": 1
-21 },{
-22 "energyConstraintList": [{"lower": 0, "
-upper": 5}],
-23 "tariffConstraint": {"minTariff": 0.03, "
-maxTariff": 0.15},
-24 "minDuration": 1,
-25 "maxDuration": 1
-26 },{
-27 "energyConstraintList": [{"lower": 0, "
-upper": 5}],
-28 "tariffConstraint": {"minTariff": 0.03, "
-maxTariff": 0.15},
-29 "minDuration": 1,
-30 "maxDuration": 1
-31 },
-32 "TotalEnergyConstraints": [{"lower": [10],
-"upper": [14]}]
-33 ],
+```json
+"flexOfferProfileConstraints": [ {
+ "energyConstraintList": [{"lower": 0, "upper": 5}],
+ "tariffConstraint": {"minTariff": 0.03, "maxTariff": 0.15},
+ "minDuration": 1,
+ "maxDuration": 1
+},{
+ "energyConstraintList": [{"lower": 0, "upper": 5}],
+ "tariffConstraint": {"minTariff": 0.03, "maxTariff": 0.15},
+ "minDuration": 1,
+ "maxDuration": 1
+},{
+ "energyConstraintList": [{"lower": 0, "upper": 5}],
+ "tariffConstraint": {"minTariff": 0.03, "maxTariff": 0.15},
+ "minDuration": 1,
+ "maxDuration": 1
+},{
+ "energyConstraintList": [{"lower": 0, "upper": 5}],
+ "tariffConstraint": {"minTariff": 0.03, "maxTariff": 0.15},
+ "minDuration": 1,
+ "maxDuration": 1
+},{
+ "energyConstraintList": [{"lower": 0, "upper": 5}],
+ "tariffConstraint": {"minTariff": 0.03, "maxTariff": 0.15},
+ "minDuration": 1,
+ "maxDuration": 1
+},{
+ "energyConstraintList": [{"lower": 0, "upper": 5}],
+ "tariffConstraint": {"minTariff": 0.03, "maxTariff": 0.15},
+ "minDuration": 1,
+ "maxDuration": 1 
+},
+ "TotalEnergyConstraints": [{"lower": [10],"upper": [14]}]
+]
+
+```
 
 We can see that it is represented like an SFO, with the addition of the total
 energy constraint.
 
-Attribute Mandatory Type Description
-TotalEnergyConstraints Yes Float Contains the total energy constraints. Has two sub-elements: lower, and upper.
+|Attribute |Mandatory |Type |Description|
+|-------|-------|----|-------|
+|TotalEnergyConstraints| Yes |Float |Contains the total energy constraints. Has two sub-elements: lower, and upper.|
 Table 2.3: Additional sub-attribute for TEC-SFOs.
+
+![Example of DFO for the charging example.](https://user-images.githubusercontent.com/48982460/211338987-bce40e98-0240-47ff-b144-6c4752eee4cc.png)
 
 Figure 2.3: Example of DFO for the charging example.
 
@@ -325,7 +302,8 @@ Figure 2.3: Example of DFO for the charging example.
 ## 2.4 Dependency FlexOffers
 A further type of constraint is the dependent energy constraint. This constraint specifies at each time unit t a lower and an upper bound on the amount of energy that can be consumed, depending on the total amount of energy that has been consumed before time unit t. In more formal terms, this means that there are three real numbers a, b, c such that 
 
-insert formula
+![equation](https://user-images.githubusercontent.com/48982460/211339101-70ef06a4-e695-45f1-a90c-5945f69624df.png)
+
 
 A dependency FO (DFO) is an FO with dependency energy constraints. Figure 2.2 shows a DFO created from the charging example, for the first four time units : for each slice, the x axis represents the amount of energy used up until that time unit, while the y axis represents the amount of usable energy at the considered time unit. In this figure, at time t = 1, 2 and 3, the amount of energy that has been consumed up to that time is 0 kWh, between 0 kWh and 5 kWh, between 0 kWh and 10 kWh respectively, as shown in the x axis. The amount of energy that the prosumer may consume is always between 0 and 5 kWh, no matter the amount of energy consumed before, as shown in the y axis. At time t = 4, the amount of energy consumed up to that time is between 0 kWh and 14 kWh, and the amount that can be consumed depends on the amount consumed up to that time, as shown in the rightmost part of Figure 2.2.
 
@@ -334,62 +312,60 @@ A dependency FO (DFO) is an FO with dependency energy constraints. Figure 2.2 sh
 
 Like in the previous subsection, we describe the sub-attributes for FlexOfferProfileConstraints in the case of a DFO. Inside FlexOfferProfileConstraints there is the sub-attribute DependencyEnergyConstraintList: it is a matrix, referred to the considered time unit. It represents a set of linear constraints which, in turn, represents the dependency energy constraints. The other attributes are the same as FlexOfferProfileConstraints. However, while EnergyConstraintsList has sub-attributes lower and higher like in the example before, DependencyEnergyConstraintsList has only the matrix. The matrix has as many rows as the number of sides of the polygons, and three columns: if the inequality representing the side is written as ax + by ≤ c, the row will be |abc|. This is called the H-representation of the slice [2].
 
+![Example of DFO for the switching example.](https://user-images.githubusercontent.com/48982460/211339186-6d61bf80-3175-4c73-afed-dc966b02de93.png)
 
 Figure 2.4: Example of DFO for the switching example.
 
 In the example of Figure 2.4, the set representing this DFO has four matrices. In Figure 4 we show a more complex example of DFO, which refers to the switching example from Section 1. At each time we can see the dependency between energy used up and energy available : for t = 1 the energy available is between -5 kWh and 5 kWh, for the following time units it depends on the amount used before. In all those time units the sum between energy used up to that moment and energy available is limited by a certain amount ; however, this amount changes depending on the time unit. In particular, the polygon representing the fourth time unit can be defined by the equations 
 
-<-insert equation (2.2)
+![equation (2.2)](https://user-images.githubusercontent.com/48982460/211339280-6460e3b9-9281-4542-8299-a7729ad35615.png)
+
 
 Where x represents the amount of energy consumed up to time 3 included, and y the amount of energy that will be consumed at time 4. Those equations can be represented by the matrix
 
-<-insert equation (2.3)
+![equation (2.3)](https://user-images.githubusercontent.com/48982460/211339363-9e656767-4954-4731-bf38-dd2d83218791.png)
 
-Attribute Mandatory Type Description
-DependencyEnergyConstraintList Yes Object Contains the DFO constraints.
+
+|Attribute| Mandatory| Type| Description|
+|-------|-------|----|-------|
+|DependencyEnergyConstraintList |Yes |Object |Contains the DFO constraints.|
 Table 2.4: Additional sub-attribute for DFOs.
 
-This is how this constraint is incorporated in the message :
-1 "flexOfferProfileConstraints": [{ {
-2 "DependencyEnergyConstraintList": [[0 1 5]
-,[0 -1 -5]],
-3 "tariffConstraint": {"minTariff": 0.03, "
-maxTariff": 0.15},
-4 "minDuration": 1,
-5 "maxDuration": 1
-6 },{
-7 "DependencyEnergyConstraintList": [[0 -1 -
-5],[0 1 5],[-1 0 -5],[1 0 5],[-1 -1 -6.
-64],[1 1 7.14]],
-8 "tariffConstraint": {"minTariff": 0.03, "
-maxTariff": 0.15},
-9 "minDuration": 1,
-10 "maxDuration": 1
-11 },{
-12 "DependencyEnergyConstraintList": [[0 -1 -
-5],[0 1 5],[-1 0 -6.64],[1 0 7.14],[-1
--1 -6.64],[1 1 7.64]],
-13 "tariffConstraint": {"minTariff": 0.03, "
-maxTariff": 0.15},
-14 "minDuration": 1,
-15 "maxDuration": 1
-16 },{
-17 "DependencyEnergyConstraintList": [[0 -1 -
-5],[0 1 5],[-1 0 -6.64],[1 0 7.64],[-1
--1 -6.64],[1 1 8.14]],
-18 "tariffConstraint": {"minTariff": 0, "
-maxTariff": 0},
-19 "minDuration": 1,
-20 "maxDuration": 1
-21 }
-22 ],
 
+This is how this constraint is incorporated in the message :
+```json
+"flexOfferProfileConstraints": [ {
+ "DependencyEnergyConstraintList": [[0 1 5],[0 -1 -5]],
+ "tariffConstraint": {"minTariff": 0.03, "maxTariff": 0.15},
+ "minDuration": 1,
+ "maxDuration": 1
+},{
+ "DependencyEnergyConstraintList": [[0 -1 -5],[0 1 5],[-1 0 -5],[1 0 5],[-1 -1 -6.64],[1 1 7.14]],
+ "tariffConstraint": {"minTariff": 0.03, "maxTariff": 0.15},
+ "minDuration": 1,
+ "maxDuration": 1
+},{
+ "DependencyEnergyConstraintList": [[0 -1 -5],[0 1 5],[-1 0 -6.64],[1 0 7.14],[-1-1 -6.64],[1 1 7.64]],
+ "tariffConstraint": {"minTariff": 0.03, "maxTariff": 0.15},
+ "minDuration": 1,
+ "maxDuration": 1
+},{
+ "DependencyEnergyConstraintList": [[0 -1 -5],[0 1 5],[-1 0 -6.64],[1 0 7.64],[-1 -1 -6.64],[1 1 8.14]],
+ "tariffConstraint": {"minTariff": 0, "maxTariff": 0},
+ "minDuration": 1,
+ "maxDuration": 1
+}
+]
+
+```
+![An uncertain FlexOffer (P 0 = 1 and P 0 = 0.8)](https://user-images.githubusercontent.com/48982460/211339737-98b53e85-cae8-44e4-a37d-185f5745ef20.png)
 
 Figure 2.5: An uncertain FlexOffer (P 0 = 1 and P 0 = 0.8)
 
-Attribute Mandatory Type Description
-UncertainFunctions Yes ? Define the UFO constraints.
-UncertainThreshold Yes Float Defines the probability threshold.
+|Attribute| Mandatory |Type |Description|
+|-------|-------|----|-------|
+|UncertainFunctions |Yes ? |Define the UFO constraints.|
+|UncertainThreshold |Yes |Float |Defines the probability threshold.|
 Table 2.5: Additional sub-attributes for UFOs.
 
 ## 2.5 Uncertain FlexOffers
@@ -400,26 +376,22 @@ UFOs can be visualized by choosing a probability threshold P 0 . At each time t,
 
 ### 2.5.1 FlexOffer message
 We describe the sub-attributes for FlexOfferProfileConstraints in the case of an UFO. Similarly to DFOs there are new sub-attributes, shown in Table 2.5. It has to be noted that, up to today, UFOs have never been employed in a real FO message: we define now how this infomation will be encoded.
+![An uncertain FlexOffer (P 0 = 1 and P 0 = 0.8)](https://user-images.githubusercontent.com/48982460/211339959-694268b7-9799-41db-89a4-93d9ffb9c916.png)
 
 Figure 2.6: An uncertain FlexOffer (P 0 = 1 and P 0 = 0.8)
 
 The UncertainThreshold attribute is a real number P 0 which represent the probability threshold. UncertainFunctions are functions that are piecewise polynomials, and will be represented as such. As an example, for the switching case, the functions f 1 ,...,f 4 look like in Figure 6. For P 0 = 0.95, we represent the UFO by the following message (to be modified):
 
 Example:
-1
-2
-3 "UncertainflexOfferProfileConstraints": [
-4
-5 {
-6
-7 "UncertainFunctions": [{g1, g2, g3}],
-8
-9 "UncertainThreshold": 0.95,
-10
-11 "minDuration": 3,
-12
-13 "maxDuration": 3
-14
-15 }
-16
-17 ],
+```json
+
+"UncertainflexOfferProfileConstraints": [
+ {
+  "UncertainFunctions": [{g1, g2, g3}],
+  "UncertainThreshold": 0.95,
+  "minDuration": 3,
+  "maxDuration": 3
+ }
+]
+
+```
