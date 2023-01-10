@@ -108,7 +108,7 @@ In the following table, the attributes included in an FO message are listed.
 |-------|-------|----|-------|
 |ID |Yes |Int |The ID that identifies the FO|
 |State| Yes |String |State of the FO (initial/offered/accepted/rejected/assigned/executed/invalid/canceled)|
-|StateReason| No|String Reason for FO rejection (if state == rejected)|
+|StateReason| No|String |Reason for FO rejection (if state == rejected)|
 |NumSecondsPerInterval |Yes| Int| Duration in seconds of a time interval (default value is 900)|
 |CreationTime |Yes |Datetime |Absolute time at which the FO has been created|
 |CreationInterval| No| Integer |FO creation Interval calculated as epoch value for creationTime/numSecondsPerInterval|
@@ -197,7 +197,7 @@ Section 1.4 describes in detail how the FO message looks like. However, the attr
 ```
 
 
-Table 2.2 describes the sub-attributes more in detail.
+Table 2.2 describes the sub-attributes of the flexOfferProfileConstraints more in detail.
 |Attribute |Mandatory| Type |Description|
 |-------|-------|----|-------|
 |EnergyConstraintsList |Yes |Object |Contains the list(s) of energy constraints for one time unit. Has two sub-elements: lower, and upper.|
@@ -215,6 +215,7 @@ Data in ScheduleSlice format has the following sub-elements:
 |Duration |No| Integer |Indicates the duration of the considered slices, in time units.|||
 |EnergyAmount| Yes |Float |Indicates the energy consumption for that slice.||
 |Tariff| No| Float| Indicates the tariff amount for that slice.|
+
 Table 2.2: ScheduleSlice data.
 
 An example for this data:
@@ -292,6 +293,7 @@ energy constraint.
 |Attribute |Mandatory |Type |Description|
 |-------|-------|----|-------|
 |TotalEnergyConstraints| Yes |Float |Contains the total energy constraints. Has two sub-elements: lower, and upper.|
+
 Table 2.3: Additional sub-attribute for TEC-SFOs.
 
 ![Example of DFO for the charging example.](https://user-images.githubusercontent.com/48982460/211338987-bce40e98-0240-47ff-b144-6c4752eee4cc.png)
@@ -329,6 +331,7 @@ Where x represents the amount of energy consumed up to time 3 included, and y th
 |Attribute| Mandatory| Type| Description|
 |-------|-------|----|-------|
 |DependencyEnergyConstraintList |Yes |Object |Contains the DFO constraints.|
+
 Table 2.4: Additional sub-attribute for DFOs.
 
 
@@ -362,11 +365,6 @@ This is how this constraint is incorporated in the message :
 
 Figure 2.5: An uncertain FlexOffer (P 0 = 1 and P 0 = 0.8)
 
-|Attribute| Mandatory |Type |Description|
-|-------|-------|----|-------|
-|UncertainFunctions |Yes ? |Define the UFO constraints.|
-|UncertainThreshold |Yes |Float |Defines the probability threshold.|
-Table 2.5: Additional sub-attributes for UFOs.
 
 ## 2.5 Uncertain FlexOffers
 Uncertain FOs are a type of FOs that take uncertainty from flexibility approximation into account. There are two main types of uncertainty that are considered: time and amount uncertainty. For example, suppose that a prosumer wants to recharge an electric vehicle (EV) overnight. At each time unit, time uncertainty refers to the probability for the EV to be plugged in for recharge at that time, and amount uncertainty refers to the amount of energy that can be given to/taken from the EV at that time. 
@@ -381,6 +379,14 @@ We describe the sub-attributes for FlexOfferProfileConstraints in the case of an
 Figure 2.6: An uncertain FlexOffer (P 0 = 1 and P 0 = 0.8)
 
 The UncertainThreshold attribute is a real number P 0 which represent the probability threshold. UncertainFunctions are functions that are piecewise polynomials, and will be represented as such. As an example, for the switching case, the functions f 1 ,...,f 4 look like in Figure 6. For P 0 = 0.95, we represent the UFO by the following message (to be modified):
+
+|Attribute| Mandatory |Type |Description|
+|-------|-------|----|-------|
+|UncertainFunctions |Yes ? |Define the UFO constraints.|
+|UncertainThreshold |Yes |Float |Defines the probability threshold.|
+
+Table 2.5: Additional sub-attributes for UFOs.
+
 
 Example:
 ```json
