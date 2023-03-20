@@ -82,16 +82,16 @@ This is an example of a FO message:
  "flexOfferProfileConstraints": [
  {
   "energyConstraintList": [{"lower": [0,0,0,0,0,0], "upper": [5,5,4.76,0,0,0]}],
-  "tariffConstraint": {"minTariff": [0.03,0.03,0.03,0,0,0], "maxTariff": [0.15,0.15,0.15,0,0,0]},
+  "priceConstraint": {"minPrice": [0.03,0.03,0.03,0,0,0], "maxPrice": [0.15,0.15,0.15,0,0,0]},
   "minDuration": 6,
   "maxDuration": 6
  }
  ],
- "flexOfferTariffConstraint": {
-  "tariffSlices": [
+ "FlexOfferPriceConstraints": {
+  "priceSlices": [
    {
    "duration": 6,
-   "tariffConstraint": {"minTariff": [0.03,0.03,0.03,0,0,0], "maxTariff": [0.15,0.15,0.15,0,0,0]}
+   "priceConstraint": {"minPrice ": [0.03,0.03,0.03,0,0,0], "maxPrice": [0.15,0.15,0.15,0,0,0]}
    }
   ],
   "startTime": "2019-04-02T00:00:00.000+0000"
@@ -99,13 +99,13 @@ This is an example of a FO message:
  "defaultSchedule": {
   "scheduleId": 0,
   "updateId": 0,
-  "scheduleSlices": [{"duration": 6, "energyAmount": [2,3,3,0,0,0], "tariff": 6}] ,
+  "scheduleSlices": [{"duration": 6, "energyAmount": [2,3,3,0,0,0], "price": 6}] ,
   "startTime": "2019-04-02T00:00:00.000+0000"
  },
  "flexOfferSchedule": {
   "scheduleId": 12345,
   "updateId": 1,
-  "scheduleSlices": [{"duration": 6, " energyAmount": [2,3,3,0,0,0], "tariff": 6}] ,
+  "scheduleSlices": [{"duration": 6, " energyAmount": [2,3,3,0,0,0], "price": 6}] ,
   "startTime": "2019-04-02T16:00:00.000+0000"
  },
  "acceptanceBeforeTime": "2019-04-02T16:30:00.000+0 000",
@@ -145,7 +145,7 @@ In the following table, the attributes included in an FO message are listed.
 |flexOfferProfileConstraints |Yes |array of flexOfferSlice| Constraints for FO profile. 	A null value or an empty list means the flexibility removal.|
 |endAfterTime| No| Datetime |Absolute time after which FO execution must end.|
 |endBeforeTime| No| Datetime| Absolute time before which FO execution must end.|
-|flexOfferTariffConstraints| No| array of tariffSlice |Constraints for FO tariff.|
+|FlexOfferPriceConstraints| No| array of priceSlice |Constraints for FO price.|
 |defaultSchedule| No |ScheduleSlice |Default energy consumption and time schedule of an FO.|
 |powerFactorConstraint|No|List of parameters|Has two sub-elements: lower, and upper.The definition of the cos phi range of energy flexibility in the adapationPotential. It is defined as pair min, max and default. If not present it is assumed min = max = 1.0.|
 |totalCostConstraint|No|List of parameters|Has two sub-elements: lower, and upper.|
@@ -154,7 +154,7 @@ In the following table, the attributes included in an FO message are listed.
 
 Here is the description of the structures that are used as parameters.
 flexOfferSlices
-tariffSlices
+priceSlices
 flexOfferSchedule
 
 
@@ -195,32 +195,32 @@ Section 1.4 describes in detail how the FO message looks like. However, the attr
 ```json
 "flexOfferProfileConstraints": [ {
  "energyConstraintList": [{"lower": 0, "upper": 5}],
- "tariffConstraint": {"minTariff": 0.03, "maxTariff": 0.15},
+ "priceConstraint": {"minPrice": 0.03, "maxPrice": 0.15},
  "minDuration": 1,
  "maxDuration": 1
 },{
  "energyConstraintList": [{"lower": 0, "upper": 5}],
- "tariffConstraint": {"minTariff": 0.03, "maxTariff": 0.15},
+ "priceConstraint": {"minPrice": 0.03, "maxPrice": 0.15},
  "minDuration": 1,
  "maxDuration": 1
 },{
  "energyConstraintList": [{"lower": 0, "upper": 5}],
- "tariffConstraint": {"minTariff": 0.03, "maxTariff": 0.15},
+ "priceConstraint": {"minPrice": 0.03, "maxPrice": 0.15},
  "minDuration": 1,
  "maxDuration": 1
 },{
  "energyConstraintList": [{"lower": 0, "upper": 5}],
- "tariffConstraint": {"minTariff": 0.03, "maxTariff": 0.15},
+ "priceConstraint": {"minPrice": 0.03, "maxPrice": 0.15},
  "minDuration": 1,
  "maxDuration": 1
 },{
  "energyConstraintList": [{"lower": 0, "upper": 5}],
- "tariffConstraint": {"minTariff": 0.03, "maxTariff": 0.15},
+ "priceConstraint": {"minPrice": 0.03, "maxPrice": 0.15},
  "minDuration": 1,
  "maxDuration": 1
 },{
  "energyConstraintList": [{"lower": 0, "upper": 5}],
- "tariffConstraint": {"minTariff": 0.03, "maxTariff": 0.15},
+ "priceConstraint": {"minPrice": 0.03, "maxPrice": 0.15},
  "minDuration": 1,
  "maxDuration": 1
 }]
@@ -230,10 +230,10 @@ Section 1.4 describes in detail how the FO message looks like. However, the attr
 Table 2.1 describes the sub-attributes of the flexOfferProfileConstraints more in detail.
 |Attribute |Mandatory| Type |Description|
 |-------|-------|----|-------|
-|EnergyConstraintsList |Yes |array of ‘energyConstraints’ |Contains the list(s) of energy constraints for one time unit. Has two sub-elements: lower, and upper.|
-|TariffConstraint| No |Object |List of tariff constraints. Has two elements: MinTariff, and MaxTariff.|
-|MinDuration |No |Integer | Minimal slice duration in number of intervals|
-|MaxDuration |No |Integer | Maximal slice duration in number of intervals|
+|energyConstraintsList |Yes |array of ‘energyConstraints’ |Contains the list(s) of energy constraints for one time unit. Has two sub-elements: lower, and upper.|
+|priceConstraint| No |Object |List of price constraints. Has two elements: minPrice, and maxPrice.|
+|minDuration |No |Integer | Minimal slice duration in number of intervals|
+|maxDuration |No |Integer | Maximal slice duration in number of intervals|
 
 *Table 2.1: Sub-attributes for SFOs.*
 
@@ -244,7 +244,7 @@ Data in ScheduleSlice format has the following sub-elements:
 |-------|-------|----|-------|
 |Duration |No| Integer |Indicates the duration of the considered slices, in time units.|
 |EnergyAmount| Yes |Float |Indicates the energy consumption for that slice. For every discrete interval of an active device operation, energy amount flexibility is characterized by a range|
-|Tariff| No| Float| Indicates the tariff amount for that slice.|
+|price| No| Float| Indicates the price amount for that slice.|
 
 *Table 2.2: ScheduleSlice data.*
 
@@ -254,12 +254,12 @@ An example for this data:
 "schedule": {
  "scheduleId": 0,
  "updateId": 0,
- "scheduleSlices": [{"duration": 1, "energyAmount": 2, "tariff": 0.5},
-  {"duration": 1, "energyAmount": 3, "tariff": 0.5}
-  {"duration": 1, "energyAmount": 3, "tariff": 0.5}
-  {"duration": 1, "energyAmount": 0, "tariff": 0}
-  {"duration": 1, "energyAmount": 0, "tariff": 0}
-  {"duration": 1, "energyAmount": 0, "tariff": 0}],
+ "scheduleSlices": [{"duration": 1, "energyAmount": 2, "price": 0.5},
+  {"duration": 1, "energyAmount": 3, "price": 0.5}
+  {"duration": 1, "energyAmount": 3, "price": 0.5}
+  {"duration": 1, "energyAmount": 0, "price": 0}
+  {"duration": 1, "energyAmount": 0, "price": 0}
+  {"duration": 1, "energyAmount": 0, "price": 0}],
  "startTime": "2019-04-02T00:00:00.000+0000"
 }
 ```
@@ -282,32 +282,32 @@ The part in the JSON message relative to it would be as described below:
 ```json
 "flexOfferProfileConstraints": [ {
  "energyConstraintList": [{"lower": 0, "upper": 5}],
- "tariffConstraint": {"minTariff": 0.03, "maxTariff": 0.15},
+ "priceConstraint": {"minPrice": 0.03, "maxPrice": 0.15},
  "minDuration": 1,
  "maxDuration": 1
 },{
  "energyConstraintList": [{"lower": 0, "upper": 5}],
- "tariffConstraint": {"minTariff": 0.03, "maxTariff": 0.15},
+ "priceConstraint": {"minPrice": 0.03, "maxPrice": 0.15},
  "minDuration": 1,
  "maxDuration": 1
 },{
  "energyConstraintList": [{"lower": 0, "upper": 5}],
- "tariffConstraint": {"minTariff": 0.03, "maxTariff": 0.15},
+ "priceConstraint": {"minPrice": 0.03, "maxPrice": 0.15},
  "minDuration": 1,
  "maxDuration": 1
 },{
  "energyConstraintList": [{"lower": 0, "upper": 5}],
- "tariffConstraint": {"minTariff": 0.03, "maxTariff": 0.15},
+ "priceConstraint": {"minPrice": 0.03, "maxPrice": 0.15},
  "minDuration": 1,
  "maxDuration": 1
 },{
  "energyConstraintList": [{"lower": 0, "upper": 5}],
- "tariffConstraint": {"minTariff": 0.03, "maxTariff": 0.15},
+ "priceConstraint": {"minPrice": 0.03, "maxPrice": 0.15},
  "minDuration": 1,
  "maxDuration": 1
 },{
  "energyConstraintList": [{"lower": 0, "upper": 5}],
- "tariffConstraint": {"minTariff": 0.03, "maxTariff": 0.15},
+ "priceConstraint": {"minPrice": 0.03, "maxPrice": 0.15},
  "minDuration": 1,
  "maxDuration": 1 
 },
@@ -368,22 +368,22 @@ This is how this constraint is incorporated in the message :
 ```json
 "flexOfferProfileConstraints": [ {
  "DependencyEnergyConstraintList": [[0 1 5],[0 -1 -5]],
- "tariffConstraint": {"minTariff": 0.03, "maxTariff": 0.15},
+ "priceConstraint": {"minPrice": 0.03, "maxPrice": 0.15},
  "minDuration": 1,
  "maxDuration": 1
 },{
  "DependencyEnergyConstraintList": [[0 -1 -5],[0 1 5],[-1 0 -5],[1 0 5],[-1 -1 -6.64],[1 1 7.14]],
- "tariffConstraint": {"minTariff": 0.03, "maxTariff": 0.15},
+ "priceConstraint": {"minPrice": 0.03, "maxPrice": 0.15},
  "minDuration": 1,
  "maxDuration": 1
 },{
  "DependencyEnergyConstraintList": [[0 -1 -5],[0 1 5],[-1 0 -6.64],[1 0 7.14],[-1-1 -6.64],[1 1 7.64]],
- "tariffConstraint": {"minTariff": 0.03, "maxTariff": 0.15},
+ "priceConstraint": {"minPrice": 0.03, "maxPrice": 0.15},
  "minDuration": 1,
  "maxDuration": 1
 },{
  "DependencyEnergyConstraintList": [[0 -1 -5],[0 1 5],[-1 0 -6.64],[1 0 7.64],[-1 -1 -6.64],[1 1 8.14]],
- "tariffConstraint": {"minTariff": 0, "maxTariff": 0},
+ "priceConstraint": {"minPrice": 0, "maxPrice": 0},
  "minDuration": 1,
  "maxDuration": 1
 }
