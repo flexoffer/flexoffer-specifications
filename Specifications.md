@@ -1,11 +1,12 @@
 # FlexOffer specifications
 
 ## Introduction
-FlexOffer (FO) is a representation of energy flexibility, which has the characteristics of i) being device-independent, ii) modeling flexibility with high accuracy, and iii) being scalable with respect to long time horizons and aggregation of many devices. This work has the purpose of defining the specifications for FOs in a general context. The fleo offers represent flexibility by highlighting the minimum and maximum available amount of energy for consumption and production. The FO concept was first proposed in the MIRABEL project, further developed in the TOTALFLEX project and demonstrated at large scale on the GOFLEX project. It is moreover demonstrated in FEVER, GIFT, edgeFlex, domos, LeapRe projects. A single FO typically includes:
+FlexOffer (FO) is a representation of energy flexibility, which has the characteristics of i) being device-independent, ii) modeling flexibility with high accuracy, and iii) being scalable with respect to long time horizons and aggregation of many devices. This work has the purpose of defining the specifications for FOs in a general context. FlexOffer (FO) is a representation of energy product, which beside the trading market products covers also the energy flexibility. It has the characteristics of the minimum and maximum available amount of energy for consumption and production. The FO concept was first proposed in the MIRABEL project, further developed in the TOTALFLEX project and demonstrated at large scale on the GOFLEX project. It is moreover demonstrated in FEVER, GIFT, edgeFlex, domos, LeapRe projects. A single FO typically includes:
 * Energy profile, having a number of discrete slices, specifies electricity consumption and production options over a device’s active period of operation, typically in 15min time resolution;
 * Time flexibility interval specifies a time period in which device’s operation (profile) can be advanced or retarded.
 * Default profile specifies a preferred / locally optimal consumption profile (a baseload)
 * Price data specifies (discomfort) prices, e.g., associated to deviations from the default profile.
+Additionally the FO protocol supports the energy flow description of energy reservoirs like batteries, EVs and others with the advanced parameters describing total, dependency and uncertain constraints.
 This document is organized as follows. Chapter 1 describes how the FO protocol works, the actors involved in creation and management of FOs, the processes FOs go through, and the life cycle of an FO. Chapter 2 describes different types of FOs that can be generated and the energy constraints defining them.
 
 ## Chapter 1: FlexOffer protocol
@@ -131,10 +132,10 @@ In the following table, the attributes included in an FO message are listed.
 |creationTime |Yes |Datetime |Absolute time at which the FO has been created|
 |creationInterval| No| Integer |FO creation Interval calculated as epoch value for creationTime/numSecondsPerInterval|
 |offeredById|Yes |String| ID of the FO owner |
-|locationID| No| String| ID for representing the location of the FO in the grid system|
-|acceptBeforeTime| No |Datetime| Absolute time before which FO with valid data must be accepted. Sets the deadline on when a flex-offer receiving party (e.g., BRP) should acknowledge successful acceptance or rejection of the flex-offer. A flex-offer rejection may occur if, e. g., flex-offer constraints or other metadata (e.g., prices) are invalid or inappropriate (e.g., quantities are too small, prices are too high).|
+|locationID| No| String| ID for representing the location of the FO in the grid system. If the parameter is not present, the location can be deducted through the offeredById parameter.|
+|acceptBeforeTime| No |Datetime| Absolute time before which FO with valid data must be accepted. Sets the deadline on when a flex-offer receiving party (e.g., BRP) should acknowledge successful acceptance or rejection of the flex-offer. A flex-offer rejection may occur if, e. g., flex-offer constraints or other metadata (e.g., prices) are invalid or inappropriate (e.g., quantities are too small, prices are too high). If the parameter is missing no acceptance response is generated (unless in the case of malformed message, when the response is returned immediately)|
 |acceptBeforeInterval| No| Integer |Interval before which FO must be accepted. |
-|assignmentBeforeTime| No |Datetime |Absolute time before which FO must be scheduled. Sets the deadlines on when flex-offer schedule update (assignment) is allowed to be sent by the flex-offer receiving party (BRP) to a flex-offer issuing party (flexible resource).|
+|assignmentBeforeTime| No |Datetime |Absolute time before which FO must be scheduled. Sets the deadlines on when flex-offer schedule update (assignment) is allowed to be sent by the flex-offer receiving party (BRP) to a flex-offer issuing party (flexible resource). In case the parameter is not present, the default value is startAfterTime.|
 |assignmentBeforeInterval |No |Integer| Interval before which FO must be scheduled.|
 |startAfterTime| No| Datetime |Absolute time after which FO must be started.The range [startAfterTime, startBeforeTime] defines the time range within which the offer can be activated. In case it is not present, it is assumed to be equal to ‘creationTime’ |
 |startAfterInterval| No |Integer |Interval after which FO must be started.|
@@ -322,7 +323,7 @@ energy constraint.
 |Attribute |Mandatory |Type |Description|
 |-------|-------|----|-------|
 |TotalEnergyConstraints| Yes |Object |Contains the total energy constraints. Bounds the total energy amount requested or offered within the full active operation of a flexible resource. Has two sub-elements: lower, and upper.|
-|SubTotalEnergyConstraints| Yes |Object |Bounds the total available energy amount requested or offered within the full active operation of a flexible resource. Has two sub-elements: lower, and upper.|
+|SubTotalEnergyConstraints| Yes |Object |Describes the available capacity of energy reservoir for charging (lower) and discharging (upper) regarding the SoC at the adaptation start. Has two sub-elements: 'lower', and 'upper'.|
 
 *Table 2.3: Additional sub-attribute for TEC-SFOs.*
 
