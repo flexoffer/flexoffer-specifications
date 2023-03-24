@@ -153,12 +153,7 @@ In the following table, the attributes included in an FO message are listed.
 
 *Table 1.1: FO attributes and their descriptions.*
 
-Here is the description of the structures that are used as parameters.
-flexOfferSlices
-priceSlices
-flexOfferSchedule
-
-
+Moreover, several constraints, that can be used to detail the offer, can be added to this message. They are described in the following chapter.
 
 ## Chapter 2: FlexOffer constraints
 
@@ -238,7 +233,7 @@ Table 2.1 describes the sub-attributes of the flexOfferProfileConstraints more i
 
 *Table 2.1: Sub-attributes for SFOs.*
 
-
+#### 2.2.2 Response schedule
 Data in ScheduleSlice format has the following sub-elements:
 
 |Attribute| Mandatory| Type |Description|
@@ -322,8 +317,8 @@ energy constraint.
 
 |Attribute |Mandatory |Type |Description|
 |-------|-------|----|-------|
-|TotalEnergyConstraints| Yes |Object |Contains the total energy constraints. Bounds the total energy amount requested or offered within the full active operation of a flexible resource. Has two sub-elements: lower, and upper.|
-|SubTotalEnergyConstraints| Yes |Object |Describes the available capacity of energy reservoir for charging (lower) and discharging (upper) regarding the SoC at the adaptation start. Has two sub-elements: 'lower', and 'upper'.|
+|totalEnergyConstraints| Yes |Object |Contains the total energy constraints. Bounds the total energy amount requested or offered within the full active operation of a flexible resource. It declares the change of the SoC at the end of adaptation. Has two sub-elements: lower, and upper.|
+|subTotalEnergyConstraints| Yes |Object |Describes the available capacity of energy reservoir for charging (lower) and discharging (upper) regarding the SoC at the adaptation start. Has two sub-elements: 'lower', and 'upper'.|
 
 *Table 2.3: Additional sub-attribute for TEC-SFOs.*
 
