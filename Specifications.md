@@ -63,62 +63,152 @@ This message is the core of the FO protocol. It is exchanged between the FO issu
 * Assign a flexibility 
 It offers a common representation of all flexibilities, based on time slices and optional constraints.
 
-This is an example of a FO message:
+This is an example of a FO message (request):
 ```json
-
-"flexOffer": {
- "id": "4188a132-a937-4639-96cf-d8529fa78b86",
- "state": "Adaptation",
- "stateReason": "FlexOffer Initialized",
- "creationInterval": 1726911,
- "offeredById": "harry@80060B5E0FD671D58243CE7162A6054719822955",
- "locationId": {
-  "userLocation": {"longitude": 9.990595, "latitude": 57.012293}
- },
- "acceptanceBeforeInterval": 1726914,
- "assignmentBeforeInterval": 1726914,
- "startAfterInterval": 1726912,
- "startBeforeInterval": 1726920,
- "assignment": "obligatory",
- "flexOfferProfileConstraints": [
- {
-  "energyConstraintList": [{"lower": [0,0,0,0,0,0], "upper": [5,5,4.76,0,0,0]}],
-  "priceConstraint": {"minPrice": [0.03,0.03,0.03,0,0,0], "maxPrice": [0.15,0.15,0.15,0,0,0]},
-  "minDuration": 6,
-  "maxDuration": 6
- }
- ],
- "FlexOfferPriceConstraints": {
-  "priceSlices": [
-   {
-   "duration": 6,
-   "priceConstraint": {"minPrice ": [0.03,0.03,0.03,0,0,0], "maxPrice": [0.15,0.15,0.15,0,0,0]}
-   }
-  ],
-  "startTime": "2019-04-02T00:00:00.000+0000"
- },
- "defaultSchedule": {
-  "scheduleId": 0,
-  "updateId": 0,
-  "scheduleSlices": [{"duration": 6, "energyAmount": [2,3,3,0,0,0], "price": 6}] ,
-  "startTime": "2019-04-02T00:00:00.000+0000"
- },
- "flexOfferSchedule": {
-  "scheduleId": 12345,
-  "updateId": 1,
-  "scheduleSlices": [{"duration": 6, " energyAmount": [2,3,3,0,0,0], "price": 6}] ,
-  "startTime": "2019-04-02T16:00:00.000+0000"
- },
- "acceptanceBeforeTime": "2019-04-02T16:30:00.000+0 000",
- "assignmentBeforeTime": "2019-04-02T16:30:00.000+0 000",
- "numSecondsPerInterval": 900,
- "startAfterTime": "2019-04-02T16:00:00.000+0000",
- "startBeforeTime": "2019-04-02T18:00:00.000+0000",
- "creationTime": "2019-04-02T15:45:00.000+0000",
- "correct": true
+{
+  "flexOffer": [
+    {
+      "id": "17",
+      "state": "offered",
+      "stateReason": "initial offer",
+      "creationTime": "2017-01-22T05:00:00Z",
+      "offeredById": "1023",
+      "acceptBeforeTime": "2017-01-22T07:45:00Z",
+      "assignmentBeforeTime": "2017-01-22T22:45:00Z",
+      "startAfterTime": "2017-01-22T09:00:00Z",
+      "startBeforeTime": "2017-02-11T22:00:00Z",
+      "numSecondsPerInterval": 900,
+      "flexOfferProfileConstraints": [
+        {
+          "minDuration": 1,
+          "maxDuration": 1,
+          "energyConstraintList": [
+            {
+              "lowerBound": -5.1,
+              "upperBound": -16.89
+            }
+          ],
+          "tariffConstraint": {
+            "minTariff": 0.03,
+            "maxTariff": 0.03
+          }
+        },
+        {
+          "minDuration": 1,
+          "maxDuration": 1,
+          "energyConstraintList": [
+            {
+              "lowerBound": -5.1,
+              "upperBound": 6.89
+            }
+          ],
+          "tariffConstraint": {
+            "minTariff": 0.03,
+            "maxTariff": 0.15
+          }
+        },
+        {
+          "minDuration": 1,
+          "maxDuration": 1,
+          "energyConstraintList": [
+            {
+              "lowerBound": 3.14,
+              "upperBound": 3.14
+            }
+          ],
+          "tariffConstraint": {
+            "minTariff": 0.03,
+            "maxTariff": 0.03
+          }
+        },
+        {
+          "minDuration": 1,
+          "maxDuration": 1,
+          "energyConstraintList": [
+            {
+              "lowerBound": 11.89,
+              "upperBound": 11.89
+            },
+            {
+              "lowerBound": 2.1,
+              "upperBound": 6.89
+            },
+            {
+              "lowerBound": 2.1,
+              "upperBound": 6.89
+            }
+          ],
+          "tariffConstraint": {
+            "minTariff": 0.15,
+            "maxTariff": 0.15
+          }
+        }
+      ],
+      "defaultSchedule": {
+        "startTime": "2017-01-22T22:45:00Z",
+        "scheduleSlices": [
+          {
+            "duration": 1,
+            "energyAmount": 0,
+            "tariff": 1
+          },
+          {
+            "duration": 1,
+            "energyAmount": 0,
+            "tariff": 1
+          }
+        ]
+      }
+    }
+  ]
 }
+
+
 ```
 
+This is an example of a FO message (response):
+```json
+
+{
+  "flexOffer": [
+    {
+      "id": "123",
+      "state": "assigned",
+      "stateReason": "assigned",
+      "creationTime": "2023-03-28T10:36:52Z",
+      "offeredById": "201",
+      "internalId": "14561741",
+      "flexOfferSchedule": {
+        "startTime": "2023-03-30T18:00:00Z",
+        "numSecondsPerInterval": 900,
+        "scheduleSlices": [
+          {
+            "duration": 1,
+            "energyAmount": "-13342.610307504",
+            "tariff": 0.158
+          },
+          {
+            "duration": 1,
+            "energyAmount": "-14330.47291966",
+            "tariff": 0.0945
+          },
+          {
+            "duration": 1,
+            "energyAmount": "-15634.3049937015",
+            "tariff": 0.111
+          },
+          {
+            "duration": 1,
+            "energyAmount": "-16754.1480817855",
+            "tariff": 0.111
+          }
+        ]
+      }
+    }
+  ]
+}
+
+```
 
 In the following table, the attributes included in an FO message are listed.
 
