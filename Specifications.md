@@ -358,7 +358,7 @@ Table 2.1 describes the sub-attributes of the flexOfferProfileConstraints more i
 |minDuration |No |Integer | Minimal slice duration in number of intervals|
 |maxDuration |No |Integer | Maximal slice duration in number of intervals|
 
-*Table 2.1: Sub-attributes for SFOs.*
+*Table 2.1: Sub-attributes of flexOfferSlice for SFOs.*
 
 #### 2.2.2 Response schedule
 Data in ScheduleSlice format has the following sub-elements:
