@@ -236,12 +236,49 @@ In the following table, the attributes included in an FO message are listed.
 |flexOfferProfileConstraints |Yes |array of flexOfferSlice| Constraints for FO profile. 	A null value or an empty list means the flexibility removal.|
 |endAfterTime| No| Datetime |Absolute time after which FO execution must end.|
 |endBeforeTime| No| Datetime| Absolute time before which FO execution must end.|
-|FlexOfferPriceConstraints| No| array of priceSlice |Constraints for FO price.|
+|flexOfferPriceConstraints| No| array of priceSlice |Constraints for FO price.|
 |defaultSchedule| No |ScheduleSlice |Default energy consumption and time schedule of an FO.|
 |powerFactorConstraint|No|List of parameters|Has two sub-elements: lower, and upper.The definition of the cos phi range of energy flexibility in the adapationPotential. It is defined as pair min, max and default. If not present it is assumed min = max = 1.0.|
 |totalCostConstraint|No|List of parameters|Has two sub-elements: lower, and upper.|
+|flexOfferProfilType|No|String| 'activeEnergy'(default)/'reactiveEnergy'/'voltage'|
+|unit|No|String|'Wh'(default)/'VAh'/'V' – units of the energy constraint list|
+|multiplier|No|String|'k'(default), '1', 'M'|
+
 
 *Table 1.1: FO attributes and their descriptions.*
+
+Here are the descriptions of the different elements mentionned in the table above.
+
+|Attribute |Mandatory |Type |Description|
+|-------|-------|----|-------|
+|lowerBound|Yes|Float| If positive: Minimal produced energy; If negative: Maximal consumed energy|
+|upperBound|Yes|Float|If positive: Maximal produced energy; If negative: Minimal consumed energy|
+
+*Table 1.2: energyConstraintsList element attributes and their descriptions.*
+
+
+|Attribute |Mandatory |Type |Description|
+|-------|-------|----|-------|
+|minprice|Yes|Float|Maximal price to be paid at consumption increase|
+|maxprice|Yes|Float|Minimal price to be received at production increase|
+
+*Table 1.3: priceConstraint element attributes and their descriptions.*
+
+
+|Attribute |Mandatory |Type |Description|
+|-------|-------|----|-------|
+|startTime|Yes|Date time|Start time of the the price slices time series|
+|priceSlices|Yes|Array of priceSlice|See detailed description in a separate table|
+
+*Table 1.4: priceConstraintsList element attributes and their descriptions.*
+
+
+|Attribute |Mandatory |Type |Description|
+|-------|-------|----|-------|
+|duration|No|Integer|Duration of the slice in nomber of intervals- If absent it is equal to 1|
+|priceConstraint|Yes|Object|See detailed description above|
+
+*Table 1.5: priceSlice element attributes and their descriptions.*
 
 Moreover, several constraints, that can be used to detail the offer, can be added to this message. They are described in the following chapter.
 
@@ -361,7 +398,7 @@ A total energy constraint standard FO (TEC-SFO) is an FO with slice and total en
 
 
 #### 2.3.1 FlexOffer Message
-Like in the previous subsection, we describe the sub-attributes for FlexOfferProfileConstraints in the case of a TEC-SFO. The only change in comparison to SFOs is that inside FlexOfferProfileConstraint, we have the sub-attribute TotalEnergyConstraints it is an object with two sub-attributes, lower and upper. They indicate the lowest and highest amount of total consumption for energy respectively.
+Like in the previous subsection, we describe the sub-attributes for flexOfferProfileConstraints in the case of a TEC-SFO. The only change in comparison to SFOs is that inside FlexOfferProfileConstraint, we have the sub-attribute totalEnergyConstraint it is an object with two sub-attributes, lower and upper. They indicate the lowest and highest amount of total consumption for energy respectively.
 
 The part in the JSON message relative to it would be as described below:
 
@@ -397,7 +434,7 @@ The part in the JSON message relative to it would be as described below:
  "minDuration": 1,
  "maxDuration": 1 
 },
- "TotalEnergyConstraints": [{"lower": [10],"upper": [14]}]
+ "totalEnergyConstraint": [{"lower": [10],"upper": [14]}]
 ]
 
 ```
@@ -407,8 +444,8 @@ energy constraint.
 
 |Attribute |Mandatory |Type |Description|
 |-------|-------|----|-------|
-|totalEnergyConstraints| Yes |Object |Contains the total energy constraints. Bounds the total energy amount requested or offered within the full active operation of a flexible resource. It declares the change of the SoC at the end of adaptation. Has two sub-elements: lower, and upper.|
-|subTotalEnergyConstraints| Yes |Object |Describes the available capacity of energy reservoir for charging (lower) and discharging (upper) regarding the SoC at the adaptation start. Has two sub-elements: 'lower', and 'upper'.|
+|totalEnergyConstraint| Yes |Object |Contains the total energy constraints. Bounds the total energy amount requested or offered within the full active operation of a flexible resource. It declares the change of the SoC at the end of adaptation. Has two sub-elements: lower, and upper.|
+|subTotalEnergyConstraint| Yes |Object |Describes the available capacity of energy reservoir for charging (lower) and discharging (upper) regarding the SoC at the adaptation start. Has two sub-elements: 'lower', and 'upper'.|
 
 *Table 2.3: Additional sub-attribute for TEC-SFOs.*
 
