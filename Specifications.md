@@ -63,6 +63,10 @@ This message is the core of the FO protocol. It is exchanged between the FO issu
 * Assign a flexibility 
 It offers a common representation of all flexibilities, based on time slices and optional constraints.
 
+![Messages exchange process](https://user-images.githubusercontent.com/48982460/233374733-64f43203-af46-45f5-9dc5-a45a65d225e4.png)
+*Figure 1.4: Messages exchange process*
+
+
 This is an example of a FO message (request):
 ```json
 {
