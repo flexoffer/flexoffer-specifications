@@ -48,12 +48,13 @@ Typical message exchange between the Prosumer and Flex-Offer receiving party, co
 
 ### 1.3 FlexOffer life cycle
 
-![A schematic description of the FO life-cycle.](https://user-images.githubusercontent.com/48982460/211333067-c1505cd5-d0ec-4104-945b-4f8954e38efa.png)
-
+![A schematic description of the FO life-cycle.](https://user-images.githubusercontent.com/48982460/233378720-3fb978e3-92bf-4033-aeb7-c323e8ea04e2.png)
 *Figure 1.2: A schematic description of the FO life-cycle.*
 
 Figure 1.2 shows the life-cycle of an FO. Two main parties are involved: the prosumer, who generates and executes the FO, and the aggregator, who processes and issues schedules for the FO. The tasks on the prosumer’s side are performed automatically by an agent, which operates according to the prosumer’s requirements.
 First, the prosumer agent forecasts flexibility for the devices, and generates FOs according to that. Each FO is then sent to the aggregator, which will determine if the FO is useful for its needs, decides whether to accept the FO or to reject it (e.g., due to some validation errors, or due to unacceptable price or energy) and informs the prosumer of the response. If the FO is not accepted, it is not executed and the cycle ends here. Otherwise, the aggregator processes it (e.g. aggregating it with other FOs, performing optimization), and establishes a schedule for each FO. FO schedules are then sent back to the prosumer agent, which will execute them by controlling the devices.
+
+The scheduling consists of the assignment deadline control (provided by flexibility manager - FMAN - component) and flex-offer matching (provided by flexibility market - FMAR - component). The FMAR component provides price based optimisation at combining the production with consumption flex-offers. If the matching could not be found till the assignment deadline then the flex-offer is rejected and no schedule is generated.
 
 ### 1.4 FlexOffer message
 This section has the purpose to show how a JSON message for an FO is made, and which attributes are considered for it.
