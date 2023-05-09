@@ -237,11 +237,11 @@ In the following table, the attributes included in an FO message are listed.
 |startAfterInterval| No |Integer |Interval after which FO must be started.|
 |startBeforeTime| Yes| Datetime |Absolute time before which FO must be started.|
 |startBeforeInterval |No |Integer| Interval before which FO must be started.|
-|endAfterInterval |No |Integer| Interval after which FO execution must end.|
-|endBeforeInterval|No |Integer| Interval before which FO execution must end.|
+|endAfterInterval |No |Integer| Interval after which FO execution must end. The parameters are used when time flexibility is being described (startAfterTime is not equal to startBeforeTime) and minDuration is not equal to maxDuration in FlexOfferSlice element|
+|endBeforeInterval|No |Integer| Interval before which FO execution must end. The parameters are used when time flexibility is being described (startAfterTime is not equal to startBeforeTime) and minDuration is not equal to maxDuration in FlexOfferSlice element|
 |flexOfferProfileConstraints |Yes |array of flexOfferSlice| Constraints for FO profile. 	A null value or an empty list means the flexibility removal.|
-|endAfterTime| No| Datetime |Absolute time after which FO execution must end.|
-|endBeforeTime| No| Datetime| Absolute time before which FO execution must end.|
+|endAfterTime| No| Datetime |Absolute time after which FO execution must end. The parameters are used when time flexibility is being described (startAfterTime is not equal to startBeforeTime) and minDuration is not equal to maxDuration in FlexOfferSlice element|
+|endBeforeTime| No| Datetime| Absolute time before which FO execution must end. The parameters are used when time flexibility is being described (startAfterTime is not equal to startBeforeTime) and minDuration is not equal to maxDuration in FlexOfferSlice element|
 |flexOfferPriceConstraints| No| array of priceSlice |Constraints for FO price.|
 |defaultSchedule| No |ScheduleSlice |Default energy consumption and time schedule of an FO.|
 |powerFactorConstraint|No|List of parameters|Has two sub-elements: lower, and upper.The definition of the cos phi range of energy flexibility in the adapationPotential. It is defined as pair min, max and default. If not present it is assumed min = max = 1.0.|
