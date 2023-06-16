@@ -8,6 +8,7 @@ FlexOffer (FO) is a representation of energy flexibility, which has the characte
 * Price data specifies (discomfort) prices, e.g., associated to deviations from the default profile.
 Additionally the FO protocol supports the energy flow description of energy reservoirs like batteries, EVs and others with the advanced parameters describing total, dependency and uncertain constraints.
 This document is organized as follows. Chapter 1 describes how the FO protocol works, the actors involved in creation and management of FOs, the processes FOs go through, and the life cycle of an FO. Chapter 2 describes different types of FOs that can be generated and the energy constraints defining them.
+It is important to note that FlexOffers represent energy and not power: it is a convention decided because all slices have a duration. It can be converted to average power per slice if needed. Moreover, the metering is done on the energy.
 
 ## Chapter 1: FlexOffer protocol
 ### 1.1 Flexibility and main actors
@@ -63,6 +64,7 @@ This message is the core of the FO protocol. It is exchanged between the FO issu
 * Accept or refuse a flexibility offer
 * Assign a flexibility 
 It offers a common representation of all flexibilities, based on time slices and optional constraints.
+FOs define energy flexibility by specifying lower and upper bounds for energy, which identify the minimum and maximum amount of energy that can be produced/consumed at the considered time slice. Positive values indicate energy consumption, negative values indicate energy production.
 
 ![Messages exchange process](https://user-images.githubusercontent.com/48982460/233374733-64f43203-af46-45f5-9dc5-a45a65d225e4.png)
 *Figure 1.4: Messages exchange process*
