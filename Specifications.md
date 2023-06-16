@@ -221,7 +221,7 @@ In the following table, the attributes included in an FO message are listed.
 |Attribute |Mandatory |Type |Description|
 |-------|-------|----|-------|
 |id |Yes |String |The ID that identifies the FO|
-|state| Yes |String |State of the FO (initial/offered/accepted/rejected/assigned/executed/invalid/canceled)|
+|state| Yes |String |State of the FO (offered/accepted/rejected/assigned/executed/invalid/canceled)|
 |stateReason| No|String |Reason for FO state|
 |numSecondsPerInterval |No| Int| Duration in seconds of a time slice (default value is 900)|
 |creationTime |Yes |Datetime |Absolute time at which the FO has been created|
