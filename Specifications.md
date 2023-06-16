@@ -1,5 +1,5 @@
 # FlexOffer specifications
-
+ 
 ## Introduction
 FlexOffer (FO) is a representation of energy flexibility, which has the characteristics of i) being device-independent, ii) modeling flexibility with high accuracy, and iii) being scalable with respect to long time horizons and aggregation of many devices. This work has the purpose of defining the specifications for FOs in a general context. FlexOffer (FO) is a representation of energy product, which beside the trading market products covers also the energy flexibility. It has the characteristics of the minimum and maximum available amount of energy for consumption and production. FOs consider time as discrete, and divided in regular intervals called time slices. The duration of a time slice is usually 15 minutes, and is defined in the parameter numSecondsPerInterval. The FO concept was first proposed in the MIRABEL project, further developed in the TOTALFLEX project and demonstrated at large scale on the GOFLEX project. It is moreover demonstrated in FEVER, GIFT, edgeFlex, domos, LeapRe projects. A single FO typically includes:
 * Energy profile, having a number of discrete slices, specifies electricity consumption and production options over a device’s active period of operation;
