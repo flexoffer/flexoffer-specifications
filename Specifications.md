@@ -478,7 +478,7 @@ Like in the previous subsection, we describe the sub-attributes for FlexOfferPro
 
 Figure 2.4: Example of DFO for the switching example.
 
-In the example of Figure 2.4, the set representing this DFO has four matrices. In Figure 4 we show a more complex example of DFO, which refers to the switching example from Section 1. At each time we can see the dependency between energy used up and energy available : for t = 1 the energy available is between -5 kWh and 5 kWh, for the following time units it depends on the amount used before. In all those time units the sum between energy used up to that moment and energy available is limited by a certain amount ; however, this amount changes depending on the time unit. In particular, the polygon representing the fourth time unit can be defined by the equations 
+In the example of Figure 2.4, the set representing this DFO has four matrices. In Figure 4 we show a more complex example of DFO, which refers to the switching example from Section 2.1. At each time we can see the dependency between energy used up and energy available : for t = 1 the energy available is between -5 kWh and 5 kWh, for the following time units it depends on the amount used before. In all those time units the sum between energy used up to that moment and energy available is limited by a certain amount ; however, this amount changes depending on the time unit. In particular, the polygon representing the fourth time unit can be defined by the equations 
 
 ![equation (2.2)](https://user-images.githubusercontent.com/48982460/211339280-6460e3b9-9281-4542-8299-a7729ad35615.png)
 
