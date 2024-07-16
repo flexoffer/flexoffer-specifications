@@ -249,11 +249,12 @@ In the following table, the attributes included in an FO message are listed.
 |powerFactorConstraint|No|List of parameters|Has two sub-elements: lower, and upper.The definition of the cos phi range of energy flexibility in the adapationPotential. It is defined as pair min, max and default. If not present it is assumed min = max = 1.0.|
 |totalCostConstraint|No|List of parameters|Has two sub-elements: lower, and upper.|
 |flexOfferProfilType|No|String| 'activeEnergy'(default)/'reactiveEnergy'/'voltage'|
-|unit|No|String|'Wh'(default)/'VAh'/'V' – units of the energy constraint list|
+|unit|No|String|'Wh'(default)/'VAh'/'kVArh'/'V' – units of the energy constraint list|
 |multiplier|No|String|'k'(default), '1', 'M'|
 |currency|No|String|For peer-to-peer exchanges, currency of the offer. Using ISO Currency Code|
 |accountId|No|String|For peer-to-peer exchanges, accound identifier of the flexibility owner.|
-
+|FlexOfferProfileType|No|String|activeEnergy(default)/reactiveEnergy/apparentEnergy/voltage|
+|powerFactorConstraint|No|powerFactorConstraint object| In case of a reactive FlexOffer. The definition of the cos phi range of energy flexibility in the FlexOfferProfileConstraint. It is defined as pair min, max and default value. If not present it is assumed min = max = 1.0.|
 
 *Table 1.1: FO attributes and their descriptions.*
 
@@ -289,6 +290,13 @@ Here are the descriptions of the different elements mentionned in the table abov
 |priceConstraint|Yes|Object|See detailed description above|
 
 *Table 1.5: priceSlice element attributes and their descriptions.*
+
+|Attribute |Mandatory |Type |Description|
+|-------|-------|----|-------|
+|min|Yes|Float|Min cos phi. Default: 1.0|
+|max|Yes|Float|Max cos phi. Default: 1.0|
+
+*Table 1.6: powerFactorConstraint element attributes and their descriptions.*
 
 Moreover, several constraints, that can be used to detail the offer, can be added to this message. They are described in the following chapter.
 
