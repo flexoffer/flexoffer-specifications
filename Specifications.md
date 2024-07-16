@@ -251,6 +251,8 @@ In the following table, the attributes included in an FO message are listed.
 |flexOfferProfilType|No|String| 'activeEnergy'(default)/'reactiveEnergy'/'voltage'|
 |unit|No|String|'Wh'(default)/'VAh'/'V' – units of the energy constraint list|
 |multiplier|No|String|'k'(default), '1', 'M'|
+|currency|No|String|For peer-to-peer exchanges, currency of the offer. Using ISO Currency Code|
+|accountId|No|String|For peer-to-peer exchanges, accound identifier of the flexibility owner.|
 
 
 *Table 1.1: FO attributes and their descriptions.*
